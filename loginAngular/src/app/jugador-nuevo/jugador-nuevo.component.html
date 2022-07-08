@@ -1,0 +1,65 @@
+<form [formGroup]="registroForm" (ngSubmit)="onSubmit()">
+  <div class="mx-auto" style="width: 50% ;">
+    <fieldset>
+      <legend>Datos Jugador</legend>
+        <div>
+          <div class="mb-3">
+            <label for="">Nombre</label>
+            <input id="nombre" type="text" placeholder="Ingrese el nombre" class="form-control" formControlName="Nombre" [ngClass]="{'is-invalid': enviado===true && registroForm.controls['Nombre'].errors}">
+          </div>
+          <div class="mb-3">
+            <label for="">Apellido</label>
+            <input id="apellido" type="text" placeholder="Ingrese el apellido" class="form-control" formControlName="Apellido" [ngClass]="{'is-invalid': enviado===true && registroForm.controls['Apellido'].errors}">
+          </div>
+          <div class="mb-3">
+            <label for="">DNI</label>
+            <input id="dni" type="number" placeholder="Ingrese número de DNI" class="form-control" formControlName="Dni" [ngClass]="{'is-invalid': enviado===true && registroForm.controls['Dni'].errors}">
+          </div>
+          <div class="mb-3">
+            <label for="">Telefono</label>
+            <input id="telefono" type="text" placeholder="Ingrese número de telefóno" class="form-control" formControlName="Telefono">
+          </div>
+          <div class="mb-3">
+            <label for="">Legajo</label>
+            <input id="legajo" type="number" placeholder="Ingrese número de legajo" class="form-control" formControlName="Legajo" [ngClass]="{'is-invalid': enviado===true && registroForm.controls['Legajo'].errors}">
+          </div>
+          <div class="mb-3">
+            <label for="">E-Mail</label>
+            <input id="email" type="text" placeholder="Ingrese el email" class="form-control" formControlName="Email" [ngClass]="{'is-invalid': enviado===true && registroForm.controls['Email'].errors}">
+          </div>
+          <div class="mb-3">
+            <label for="">Fecha Nacimiento</label>
+            <input id="fecha-nacimiento" type="date" class="form-control" formControlName="FechaDeNacimiento">
+          </div>
+        </div>
+        <div class="mb-3">
+          <legend>Facultad</legend><br>
+          <select name="facultades" formControlName="Localidad" id="">
+            <option *ngFor="let n of facultades" [value]="n.codigo">
+              {{n.nombre}}
+          </option>
+          </select>
+        </div>
+        <div class="mb-3">
+          <legend>Disciplina</legend><br>
+          <select name="disciplinas" formControlName="Disciplina" id="">
+            <option *ngFor="let n of disciplinas" [value]="n.codigo">
+              {{n.nombre}}
+          </option>
+          </select>
+        </div>
+        <div class="mb-3">
+          <legend>Nacionalidad</legend><br>
+          <select name="nacionalidades" formControlName="Nacionalidad" id="">
+            <option *ngFor="let n of nacionalidades" [value]="n.alpha3code">
+              {{n.name}}
+            </option>
+          </select>
+        </div>
+        <div>
+          <button type="submit" class="btn btn-primary" (click)="onSubmit()">Registrar</button>
+          <button style="margin: 10px" (click)="onVolver()" type="submit" class="btn btn-primary">Volver</button>
+        </div> 
+    </fieldset>
+  </div>
+</form>
