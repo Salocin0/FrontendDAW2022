@@ -1,4 +1,36 @@
-<h1>Bienvenidos</h1>
-<button (click)="onJugadoresClick()">Lista de Jugadores</button>
-<button (click)="onNuevoJugadorClick()">Nuevo Jugador</button>
-<H1>DAW 2022</H1>
+<h1></h1> 
+<div class="mx-auto" style="width: 50%;">
+    <div class="card">
+        <div class="card-header">
+            <h1 align="center" class="mb-3">Bienvenidos</h1>
+        </div>
+        <div class="card-body">
+            <div class="row">
+                <div class="col btn-group btn-group-block mb-3">
+                    <button (click)="onJugadoresClick()"  class="btn btn-block btn-primary"><i class="fa-solid fa-list"></i> Lista de Jugadores</button>
+                    <button (click)="onDisciplinasClick()" class="btn btn-block btn-primary"><i class="fa-solid fa-list"></i> Lista de Disciplinas</button>
+                    <button (click)="onFacultadesClick()" class="btn btn-block btn-primary"><i class="fa-solid fa-list"></i> Lista de Facultades</button>
+                </div>
+                <div></div>
+                <div class="col btn-group btn-group-block mb-3">
+                    <button (click)="onNuevoJugadorClick()" class="btn btn-block btn-primary"><i class="fa-solid fa-plus"></i> Nuevo Jugador</button>
+                    <button (click)="onNuevaDisciplinaClick()" class="btn btn-block btn-primary"><i class="fa-solid fa-plus"></i> Nueva Disciplina</button>
+                    <button (click)="onNuevaFacultadClick()" class="btn btn-block btn-primary"><i class="fa-solid fa-plus"></i> Nueva Facultad</button>
+                </div> 
+            </div>
+            
+        </div>
+        <div class="card-footer">  
+            <H1 align="center" class="mb-3">DAW 2022</H1>
+        </div>
+        
+    </div> 
+    <dir align="right" class="mb-3">
+        <button (click)="onSalir()" class="btn btn-block btn-danger"><i class="fa-solid fa-arrow-right-from-bracket"></i> Salir</button>
+    </dir>
+       
+</div>
+
+
+
+

@@ -1,7 +1,7 @@
 <form [formGroup]="registroForm" (ngSubmit)="onSubmit()">
   <div class="mx-auto" style="width: 50% ;">
     <fieldset>
-      <legend>Datos Jugador</legend>
+      <legend align="center">Datos Jugador</legend>
         <div>
           <div class="mb-3">
             <label for="">Nombre</label>
@@ -35,30 +35,33 @@
         <div class="mb-3">
           <legend>Facultad</legend><br>
           <select name="facultades" formControlName="Localidad" id="">
+            <option value="">Seleccionar</option>
             <option *ngFor="let n of facultades" [value]="n.codigo">
               {{n.nombre}}
-          </option>
+            </option>
           </select>
         </div>
         <div class="mb-3">
           <legend>Disciplina</legend><br>
           <select name="disciplinas" formControlName="Disciplina" id="">
+            <option value="">Seleccionar</option>
             <option *ngFor="let n of disciplinas" [value]="n.codigo">
               {{n.nombre}}
-          </option>
+            </option>
           </select>
         </div>
         <div class="mb-3">
           <legend>Nacionalidad</legend><br>
           <select name="nacionalidades" formControlName="Nacionalidad" id="">
+            <option value="">Seleccionar</option>
             <option *ngFor="let n of nacionalidades" [value]="n.alpha3code">
               {{n.name}}
             </option>
           </select>
         </div>
         <div>
-          <button type="submit" class="btn btn-primary" (click)="onSubmit()">Registrar</button>
-          <button style="margin: 10px" (click)="onVolver()" type="submit" class="btn btn-primary">Volver</button>
+          <button type="submit" class="btn btn-primary" (click)="onSubmit()"><i class="fa-solid fa-angle-down"></i> Registrar</button>
+          <button style="margin: 10px" (click)="onVolver()" type="submit" class="btn btn-danger"><i class="fa-solid fa-arrow-right-from-bracket"></i> Volver</button>
         </div> 
     </fieldset>
   </div>

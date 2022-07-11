@@ -67,4 +67,49 @@ export class JugadoresComponent implements OnInit {
   onVolver(){
     this.router.navigate(['home'])
   }
+
+  onOrdenarXNombre(){
+    //ordenar de A a Z si es la primera vez q se aplica
+    //ordenar de Z a A si es la segunda vez q se aplica
+    //quita el orden por nombre si es la tercera ves
+  }
+
+  onOrdenarXFechaNacimiento(){
+    //ordenar de fecha mas cercana a fecha mas lejana si es la primera vez q se aplica
+    //ordenar de fecha mas lejana a fecha mas cercana si es la segunda vez q se aplica
+    //quita el orden por fecha de nacimiento si es la tercera ves
+  }
+
+  onOrdenarXDNI(){
+    //ordenar de 1 a infinito si es la primera vez q se aplica
+    //ordenar de infinito a 1 si es la segunda vez q se aplica
+    //quita el orden por DNI si es la tercera ves
+  }
+
+  onOrdenarXFacultad(){
+    //ordenar de A a Z si es la primera vez q se aplica
+    //ordenar de Z a A si es la segunda vez q se aplica
+    //quita el orden por facultad si es la tercera ves
+  }
+
+  onOrdenarXDisciplina(){
+    //ordenar de A a Z si es la primera vez q se aplica
+    //ordenar de Z a A si es la segunda vez q se aplica
+    //quita el orden por diciplina si es la tercera ves
+  }
+
+  onOrdenarXNacionalidad(){
+    //ordenar de A a Z si es la primera vez q se aplica
+    //ordenar de Z a A si es la segunda vez q se aplica
+    //quita el orden por nacionalidad si es la tercera ves
+  }
+  
+  onPaginaSiguiente(){
+    //setea la pagina actual + 1, si la pagina actual no es la ultima
+    //muestra la pagina actual
+  }
+  onPaginaAnterior(){
+    //setea la pagina actual - 1, si la pagina actual no es la primera 
+    //muestra la pagina actual
+  }
 }

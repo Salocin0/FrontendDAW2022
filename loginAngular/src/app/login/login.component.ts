@@ -4,7 +4,6 @@ import { FormControl } from '@angular/forms';
 import { Router } from '@angular/router';
 import Swal from 'sweetalert2';
 
-
 @Component({
   selector: 'app-login',
   templateUrl: './login.component.html',
@@ -15,7 +14,7 @@ export class LoginComponent implements OnInit {
     {
     usuario: ['',[Validators.required], Validators.minLength(4)],
     password:['',[Validators.required]]
-  }
+    }
   )
   constructor(private builder: FormBuilder, private router:Router) { }
 
@@ -29,11 +28,11 @@ export class LoginComponent implements OnInit {
     if (!this.loginForm.get("usuario")?.errors && !this.loginForm.get("password")?.errors){
       this.router.navigate(['home'])
       Swal.fire({
-        title: 'bienvenido al sistema' //para hacer aletas cuando se registro correctamente al jugador
+        title: 'bienvenido al sistema'
       })
     }else{
       Swal.fire({
-        title: 'Error en usuario o contraseña' //para hacer aletas cuando se registro correctamente al jugador
+        title: 'Error en usuario o contraseña'
       })
     }
   }
