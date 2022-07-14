@@ -32,6 +32,10 @@ export class FacultadesService {
     return this.httpClient.get<Facultad[]>(`${this.URLBase}`);
   }
 
+  getFacultadesFiltro(nombre:String,codigo:String,codigoNumerico:String): Observable<Facultad[]>{
+    return this.httpClient.get<Facultad[]>(`${this.URLBase}`+"/?nombre="+nombre+"&codigo="+codigo+"&codigoNumerico="+codigoNumerico);
+  }
+
 }
 /*
 {codigo: 'CBA',nombre:'Córdoba'},

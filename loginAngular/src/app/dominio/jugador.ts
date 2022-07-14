@@ -12,8 +12,13 @@ export class Jugador {
     facultad: Facultad
     nacionalidad: Nacionalidad
     disciplina: Disciplina
+    apellidoNombre: string
+    fechaFormat:string
+    telefono:string
+    legajo:string
+    email:string
 
-    constructor(nombre: string,apellido: string,dni: number, facultad: Facultad, nacionalidad:Nacionalidad, disciplina:Disciplina, fecha:Date,id:number){
+    constructor(nombre: string,apellido: string,dni: number, facultad: Facultad, nacionalidad:Nacionalidad, disciplina:Disciplina, fecha:Date,id:number, apellidoNombre:string, fechaFormat:string, telefono:string, legajo:string, email:string){
         this.id=id
         this.nombre = nombre
         this.apellido = apellido
@@ -22,9 +27,10 @@ export class Jugador {
         this.facultad = facultad
         this.nacionalidad = nacionalidad
         this.disciplina = disciplina
-    }
-
-    public getNombreApellido(): string{
-        return this.apellido + ' ' + this.nombre
+        this.apellidoNombre =apellidoNombre
+        this.fechaFormat = fechaFormat
+        this.email=email
+        this.legajo=legajo
+        this.telefono=telefono
     }
 }

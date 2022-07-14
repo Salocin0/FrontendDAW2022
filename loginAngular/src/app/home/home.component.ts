@@ -26,12 +26,14 @@ export class HomeComponent implements OnInit {
   }
   
   onFacultadesClick(){
+    this.router.navigate(['facultades'])
   }
 
   onNuevaDisciplinaClick(){
   }
 
   onNuevaFacultadClick(){
+    this.router.navigate(['facultad-nuevo'])
   }
   
   onSalir(){

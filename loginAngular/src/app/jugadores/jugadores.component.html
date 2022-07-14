@@ -1,6 +1,6 @@
 <form [formGroup]="filtrarJugadoresForm" (ngSubmit)="onFiltrar()">
-    <div class="mx-auto" style="width: 75%;">
-        <h1>Datos Jugadores</h1>
+    <div class="mx-auto" style="width: 90%;">
+        <h1>Jugadores</h1>
         <h3>Filtros</h3>
             <div class="row">
                 <div class="form-group col mb-3">
@@ -43,23 +43,37 @@
         </div>
         <table class="table table-bordered">
             <thead class="table-dark">
-                <tr class="d-flex">
-                    <th class="col-2" scope="col" (click)="onOrdenarXNombre()" ><i class="fa-solid fa-circle-arrow-down"></i> Nombre y Apellido</th>
-                    <th class="col-2" scope="col" (click)="onOrdenarXFechaNacimiento()"><i class="fa-solid fa-circle"></i> Fecha Nacimiento</th>
-                    <th class="col-2" scope="col" (click)="onOrdenarXDNI()"><i class="fa-solid fa-circle-arrow-up"></i> DNI</th>
-                    <th class="col-2" scope="col" (click)="onOrdenarXFacultad()"><i class="fa-solid fa-arrow-down-short-wide"></i> Facultad</th>
-                    <th class="col-2" scope="col" (click)="onOrdenarXDisciplina()"><i class="fa-solid fa-arrow-down-short-wide"></i> Disciplina</th>
-                    <th class="col-2" scope="col" (click)="onOrdenarXNacionalidad()"><i class="fa-solid fa-arrow-down-short-wide"></i> Nacionalidad</th>
+                <tr class="col-md-auto">
+                    <th  scope="col" (click)="onOrdenarXNombre()" ><i class="fa-solid fa-circle-arrow-down"></i> Nombre y Apellido</th>
+                    <th  scope="col" (click)="onOrdenarXFechaNacimiento()"><i class="fa-solid fa-circle"></i> Fecha Nacimiento</th>
+                    <th  scope="col" (click)="onOrdenarXDNI()"><i class="fa-solid fa-circle-arrow-up"></i> DNI</th>
+                    <th  scope="col" (click)="onOrdenarXFacultad()"><i class="fa-solid fa-arrow-down-short-wide"></i> Facultad</th>
+                    <th  scope="col" (click)="onOrdenarXDisciplina()"><i class="fa-solid fa-arrow-down-short-wide"></i> Disciplina</th>
+                    <th  scope="col" (click)="onOrdenarXNacionalidad()"><i class="fa-solid fa-arrow-down-short-wide"></i> Nacionalidad</th>
+                    <th  scope="col" (click)="onOrdenarXTelefono()">Telefono</th>
+                    <th  scope="col" (click)="onOrdenarXLegajo()">Legajo</th>
+                    <th  scope="col" (click)="onOrdenarXEMail()">E-Mail</th>
+                    <th  scope="col" >Acciones</th>
+
                 </tr>
             </thead>
             <tbody>
-                <tr *ngFor = "let jugador of jugadores">
-                    <td>{{jugador.nombre +" "+ jugador.apellido}}</td>
+                <tr class="col-md-auto" *ngFor = "let jugador of jugadores">
+                    <td>{{jugador.apellidoNombre}}</td>
+                    <td>{{jugador.fechaFormat}}</td>
                     <td>{{jugador.dni}}</td>
-                    <td>{{jugador.fechaNacimiento}}</td>
                     <td>{{jugador.facultad.nombre}}</td>
                     <td>{{jugador.disciplina.nombre}}</td>
                     <td>{{jugador.nacionalidad.nombre}}</td>
+                    <td>{{jugador.telefono}}</td>
+                    <td>{{jugador.legajo}}</td>
+                    <td>{{jugador.email}}</td>
+                    <td>
+                        <div align="center" class="btn-group btn-group-block">
+                            <button (click)="onModificar()" class="btn btn-success" ><i class="fa-solid fa-file-pen"></i></button>
+                            <button (click)="onBorrar()" class="btn btn-danger" ><i class="fa-solid fa-trash"></i></button>
+                        </div>
+                    </td>
                 </tr>
             </tbody>
         </table>
@@ -69,6 +83,7 @@
             <button (click)="onPaginaAnterior()" class="btn btn-primary" style="margin: 10px"><i class="fa-solid fa-angle-right"></i></button>
         </div>
         <div align="right">
+            <button (click)="onNuevoJugadorClick()" style="margin: 10px" class="btn btn-success" ><i class="fa-solid fa-plus"></i></button>
             <button (click)="onVolver()" class="btn btn-danger">Volver <i class="fa-solid fa-arrow-right-from-bracket"></i></button>
         </div>
     </div>

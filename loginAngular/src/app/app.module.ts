@@ -10,6 +10,8 @@ import { ReactiveFormsModule } from '@angular/forms';
 import { JugadoresComponent } from './jugadores/jugadores.component';
 import { JugadorNuevoComponent } from './jugador-nuevo/jugador-nuevo.component';
 import { HttpClientModule } from '@angular/common/http';
+import { FacultadNuevoComponent } from './facultad-nuevo/facultad-nuevo.component';
+import { FacultadesComponent } from './facultades/facultades.component';
 @NgModule({
   declarations: [
     AppComponent,
@@ -17,6 +19,8 @@ import { HttpClientModule } from '@angular/common/http';
     HomeComponent,
     JugadoresComponent,
     JugadorNuevoComponent,
+    FacultadNuevoComponent,
+    FacultadesComponent,
     
   ],
   imports: [

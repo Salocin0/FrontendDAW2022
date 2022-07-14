@@ -1,5 +1,7 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
+import { FacultadNuevoComponent } from './facultad-nuevo/facultad-nuevo.component';
+import { FacultadesComponent } from './facultades/facultades.component';
 import { HomeComponent } from './home/home.component';
 import { JugadorNuevoComponent } from './jugador-nuevo/jugador-nuevo.component';
 import { JugadoresComponent } from './jugadores/jugadores.component';
@@ -10,6 +12,8 @@ const routes: Routes = [
   {path:'home', component: HomeComponent},
   {path:'jugadores',component:JugadoresComponent},
   {path:'jugador-nuevo',component:JugadorNuevoComponent},
+  {path:'facultades',component:FacultadesComponent},
+  {path:'facultad-nuevo',component:FacultadNuevoComponent},
   {path: '**', redirectTo: 'login'}
   
 ];

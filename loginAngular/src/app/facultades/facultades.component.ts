@@ -1,63 +1,61 @@
 import { Component, OnInit } from '@angular/core';
+import { FormBuilder, FormGroup } from '@angular/forms';
 import { Router } from '@angular/router';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { Jugador } from '../dominio/jugador';
-import { DisciplinasService } from '../servicios/disciplinas.service';
+import { Facultad } from '../dominio/facultad';
 import { FacultadesService } from '../servicios/facultades.service';
-import { JugadorService } from '../servicios/jugador.service';
-import { NacionalidadesService } from '../servicios/nacionalidades.service';
 
 @Component({
-  selector: 'app-jugadores',
-  templateUrl: './jugadores.component.html',
-  styleUrls: ['./jugadores.component.css']
+  selector: 'app-facultades',
+  templateUrl: './facultades.component.html',
+  styleUrls: ['./facultades.component.css']
 })
-export class JugadoresComponent implements OnInit {
+export class FacultadesComponent implements OnInit {
 
-  constructor(private  router: Router,private servicioNacionalidades: NacionalidadesService, private servicioDisciplinas: DisciplinasService, private servicioFacultades: FacultadesService, private servicioJugador: JugadorService, private formBuilder: FormBuilder) { 
-      this.filtrarJugadoresForm = this.formBuilder.group({
-        filtro:[""],
-        filtroDisciplina: [""],
-        filtroFacultad: [""],
-        filtroNacionalidad: [""]
-      })
-  }
-
-  nacionalidades: any;
-  disciplinas: any[] = [];
-  facultades: any[] = [];
-  jugadores: Jugador[] = [];
-  filtrarJugadoresForm: FormGroup;
-    
-  ngOnInit(): void {
-    this.servicioNacionalidades.getNacionalidades().subscribe((rta) => {this.nacionalidades = rta});
-    this.servicioDisciplinas.getDisciplinas().subscribe((rta)=>{this.disciplinas=rta});
-    this.servicioFacultades.getFacultades().subscribe((rta)=>{this.facultades=rta});
-    this.obtenerJugadores();
-  }
-
-  private obtenerJugadores(){
-    this.servicioJugador.getJugadores().subscribe(listaJugadores =>{
-      this.jugadores=listaJugadores;
+  constructor(private router: Router, private servicioFacultades: FacultadesService, private formBuilder: FormBuilder) { 
+    this.filtrarFacultadesForm = this.formBuilder.group({
+      nombre:[""],
+      codigo:[""],
+      codigoNumerico:[""],
     })
   }
 
-  onNuevoJugadorClick(){
+  facultades: any[] = [];
+  filtrarFacultadesForm: FormGroup;
+  
+  ngOnInit(): void {
+    this.obtenerFacultades();
+  }
+
+  private obtenerFacultades(){
+    this.servicioFacultades.getFacultades().subscribe(listaFacultades =>{this.facultades=listaFacultades;})
+  }
+
+  onNuevoFacultadClick(){
     this.router.navigate(['facultad-nuevo'])
   }
 
   editar(id: number){
     alert(id)
   }
+
   eliminar(id: number){
     alert("Eliminando a "+id)
   }
+
   onFiltrar(){
-    alert(this.filtrarJugadoresForm.controls["nombre"].value)
-    //this.jugador = this.servicioJugador.getJugadores()
+    //alert(this.filtrarFacultadesForm.controls["nombre"].value)
+    //alert(this.filtrarFacultadesForm.controls["codigo"].value)
+    //alert(this.filtrarFacultadesForm.controls["codigoNumerico"].value)
+    const nombre=this.filtrarFacultadesForm.controls["nombre"].value
+    const codigo=this.filtrarFacultadesForm.controls["codigo"].value
+    const codigoNumerico=this.filtrarFacultadesForm.controls["codigoNumerico"].value
+    this.servicioFacultades.getFacultadesFiltro(nombre,codigo,codigoNumerico).subscribe(listaFacultades =>{this.facultades=listaFacultades;})
   }
+
   onLimpiarFiltro() {
-    this.filtrarJugadoresForm.controls["nombre"].setValue('')
+    this.filtrarFacultadesForm.controls["nombre"].setValue('')
+    this.filtrarFacultadesForm.controls["codigo"].setValue('')
+    this.filtrarFacultadesForm.controls["codigoNumerico"].setValue('')
     this.onFiltrar()
   }
 
@@ -100,32 +98,51 @@ export class JugadoresComponent implements OnInit {
     //ordenar de Z a A si es la segunda vez q se aplica
     //quita el orden por nacionalidad si es la tercera ves
   }
-  
+
   onPaginaSiguiente(){
     //setea la pagina actual + 1, si la pagina actual no es la ultima
     //muestra la pagina actual
   }
+
   onPaginaAnterior(){
     //setea la pagina actual - 1, si la pagina actual no es la primera 
     //muestra la pagina actual
   }
-  onModificar(){
+
+  onModificar(facultad:Facultad){
     //setea la pagina actual - 1, si la pagina actual no es la primera 
     //muestra la pagina actual
   }
-  onBorrar(){
-    //setea la pagina actual - 1, si la pagina actual no es la primera 
-    //muestra la pagina actual
+
+  onBorrar(facultad:Facultad){
+    this.servicioFacultades.eliminarFacultad(facultad).subscribe(facultad =>{console.log(facultad);})
+    this.servicioFacultades.getFacultades().subscribe(listaFacultades =>{this.facultades=listaFacultades;})
   }
+
   onOrdenarXEMail(){
     //setea la pagina actual - 1, si la pagina actual no es la primera 
     //muestra la pagina actual
   }
+  
   onOrdenarXLegajo(){
     //setea la pagina actual - 1, si la pagina actual no es la primera 
     //muestra la pagina actual
   }
+
   onOrdenarXTelefono(){
+    //setea la pagina actual - 1, si la pagina actual no es la primera 
+    //muestra la pagina actual
+  }
+
+  onOrdenarXID(){
+    //setea la pagina actual - 1, si la pagina actual no es la primera 
+    //muestra la pagina actual
+  }
+  onOrdenarXCodigo(){
+    //setea la pagina actual - 1, si la pagina actual no es la primera 
+    //muestra la pagina actual
+  }
+  onOrdenarXCodigoNumerico(){
     //setea la pagina actual - 1, si la pagina actual no es la primera 
     //muestra la pagina actual
   }
