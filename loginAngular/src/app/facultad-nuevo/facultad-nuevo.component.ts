@@ -53,7 +53,4 @@ export class FacultadNuevoComponent implements OnInit {
     this.router.navigate(['home'])
   }
 
-  buscarNacionalidad(){
-  }
-
 }

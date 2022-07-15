@@ -43,9 +43,6 @@ export class FacultadesComponent implements OnInit {
   }
 
   onFiltrar(){
-    //alert(this.filtrarFacultadesForm.controls["nombre"].value)
-    //alert(this.filtrarFacultadesForm.controls["codigo"].value)
-    //alert(this.filtrarFacultadesForm.controls["codigoNumerico"].value)
     const nombre=this.filtrarFacultadesForm.controls["nombre"].value
     const codigo=this.filtrarFacultadesForm.controls["codigo"].value
     const codigoNumerico=this.filtrarFacultadesForm.controls["codigoNumerico"].value
@@ -63,40 +60,24 @@ export class FacultadesComponent implements OnInit {
     this.router.navigate(['home'])
   }
 
+  onModificar(facultad:Facultad){
+    this.router.navigate(['facultad-actualizar',facultad])
+  }
+
+  onBorrar(facultad:Facultad){
+    this.servicioFacultades.eliminarFacultad(facultad).subscribe(facultad =>{console.log(facultad);})
+    this.servicioFacultades.getFacultades().subscribe(listaFacultades =>{this.facultades=listaFacultades;})
+  }
+
+  onConsultar(facultad:Facultad){
+    //setea la pagina actual - 1, si la pagina actual no es la primera 
+    //muestra la pagina actual
+  }
+
   onOrdenarXNombre(){
     //ordenar de A a Z si es la primera vez q se aplica
     //ordenar de Z a A si es la segunda vez q se aplica
     //quita el orden por nombre si es la tercera ves
-  }
-
-  onOrdenarXFechaNacimiento(){
-    //ordenar de fecha mas cercana a fecha mas lejana si es la primera vez q se aplica
-    //ordenar de fecha mas lejana a fecha mas cercana si es la segunda vez q se aplica
-    //quita el orden por fecha de nacimiento si es la tercera ves
-  }
-
-  onOrdenarXDNI(){
-    //ordenar de 1 a infinito si es la primera vez q se aplica
-    //ordenar de infinito a 1 si es la segunda vez q se aplica
-    //quita el orden por DNI si es la tercera ves
-  }
-
-  onOrdenarXFacultad(){
-    //ordenar de A a Z si es la primera vez q se aplica
-    //ordenar de Z a A si es la segunda vez q se aplica
-    //quita el orden por facultad si es la tercera ves
-  }
-
-  onOrdenarXDisciplina(){
-    //ordenar de A a Z si es la primera vez q se aplica
-    //ordenar de Z a A si es la segunda vez q se aplica
-    //quita el orden por diciplina si es la tercera ves
-  }
-
-  onOrdenarXNacionalidad(){
-    //ordenar de A a Z si es la primera vez q se aplica
-    //ordenar de Z a A si es la segunda vez q se aplica
-    //quita el orden por nacionalidad si es la tercera ves
   }
 
   onPaginaSiguiente(){
@@ -108,36 +89,7 @@ export class FacultadesComponent implements OnInit {
     //setea la pagina actual - 1, si la pagina actual no es la primera 
     //muestra la pagina actual
   }
-
-  onModificar(facultad:Facultad){
-    //setea la pagina actual - 1, si la pagina actual no es la primera 
-    //muestra la pagina actual
-  }
-
-  onBorrar(facultad:Facultad){
-    this.servicioFacultades.eliminarFacultad(facultad).subscribe(facultad =>{console.log(facultad);})
-    this.servicioFacultades.getFacultades().subscribe(listaFacultades =>{this.facultades=listaFacultades;})
-  }
-
-  onOrdenarXEMail(){
-    //setea la pagina actual - 1, si la pagina actual no es la primera 
-    //muestra la pagina actual
-  }
   
-  onOrdenarXLegajo(){
-    //setea la pagina actual - 1, si la pagina actual no es la primera 
-    //muestra la pagina actual
-  }
-
-  onOrdenarXTelefono(){
-    //setea la pagina actual - 1, si la pagina actual no es la primera 
-    //muestra la pagina actual
-  }
-
-  onOrdenarXID(){
-    //setea la pagina actual - 1, si la pagina actual no es la primera 
-    //muestra la pagina actual
-  }
   onOrdenarXCodigo(){
     //setea la pagina actual - 1, si la pagina actual no es la primera 
     //muestra la pagina actual
@@ -146,4 +98,5 @@ export class FacultadesComponent implements OnInit {
     //setea la pagina actual - 1, si la pagina actual no es la primera 
     //muestra la pagina actual
   }
+
 }

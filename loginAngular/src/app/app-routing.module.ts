@@ -1,5 +1,6 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
+import { FacultadActualizarComponent } from './facultad-actualizar/facultad-actualizar.component';
 import { FacultadNuevoComponent } from './facultad-nuevo/facultad-nuevo.component';
 import { FacultadesComponent } from './facultades/facultades.component';
 import { HomeComponent } from './home/home.component';
@@ -11,9 +12,11 @@ const routes: Routes = [
   {path:'login', component: LoginComponent},
   {path:'home', component: HomeComponent},
   {path:'jugadores',component:JugadoresComponent},
+  {path:'facultad-actualizar',component:FacultadActualizarComponent},
   {path:'jugador-nuevo',component:JugadorNuevoComponent},
   {path:'facultades',component:FacultadesComponent},
   {path:'facultad-nuevo',component:FacultadNuevoComponent},
+
   {path: '**', redirectTo: 'login'}
   
 ];

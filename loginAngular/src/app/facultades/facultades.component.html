@@ -29,6 +29,7 @@
                     <td>{{facultad.codigoNumerico}}</td>
                     <td>
                         <div align="center" class="btn-group btn-group-block">
+                            <button (click)="onConsultar(facultad)" class="btn btn-primary" ><i class="fa-solid fa-eye"></i></button>
                             <button (click)="onModificar(facultad)" class="btn btn-success" ><i class="fa-solid fa-file-pen"></i></button>
                             <button (click)="onBorrar(facultad)" class="btn btn-danger" ><i class="fa-solid fa-trash"></i></button>
                         </div>

@@ -12,6 +12,7 @@ import { JugadorNuevoComponent } from './jugador-nuevo/jugador-nuevo.component';
 import { HttpClientModule } from '@angular/common/http';
 import { FacultadNuevoComponent } from './facultad-nuevo/facultad-nuevo.component';
 import { FacultadesComponent } from './facultades/facultades.component';
+import { FacultadActualizarComponent } from './facultad-actualizar/facultad-actualizar.component';
 @NgModule({
   declarations: [
     AppComponent,
@@ -21,6 +22,7 @@ import { FacultadesComponent } from './facultades/facultades.component';
     JugadorNuevoComponent,
     FacultadNuevoComponent,
     FacultadesComponent,
+    FacultadActualizarComponent,
     
   ],
   imports: [

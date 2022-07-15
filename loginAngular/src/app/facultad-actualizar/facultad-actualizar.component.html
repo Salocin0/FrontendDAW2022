@@ -1,0 +1,25 @@
+<form [formGroup]="registroForm" (ngSubmit)="onSubmit()">
+    <div class="mx-auto" style="width: 50% ;">
+        <fieldset>
+            <legend align="center">Datos Facultad</legend>
+            <div>
+                <div class="mb-3">
+                    <label for="">Nombre</label>
+                    <input id="nombre" type="text" placeholder="Ingrese el nombre" class="form-control" formControlName="Nombre" [ngClass]="{'is-invalid': enviado===true && registroForm.controls['Nombre'].errors}">
+                </div>
+                <div class="mb-3">
+                    <label for="">Codigo</label>
+                    <input id="codigo" type="text" placeholder="Ingrese el codigo" class="form-control" formControlName="Codigo" [ngClass]="{'is-invalid': enviado===true && registroForm.controls['Codigo'].errors}">
+                </div>
+                <div class="mb-3">
+                    <label for="">Codigo Numerico</label>
+                    <input id="codigoNumerico" type="text" placeholder="Ingrese codigo numerico" class="form-control" formControlName="CodigoNumerico" [ngClass]="{'is-invalid': enviado===true && registroForm.controls['CodigoNumerico'].errors}">
+                </div>
+                <div>
+                    <button type="submit" class="btn btn-primary" (click)="onSubmit()"><i class="fa-solid fa-angle-down"></i> Actualizar</button>
+                    <button style="margin: 10px" (click)="onVolver()" type="submit" class="btn btn-danger"><i class="fa-solid fa-arrow-right-from-bracket"></i> Volver</button>
+                </div>
+            </div> 
+        </fieldset>
+    </div>
+</form>
