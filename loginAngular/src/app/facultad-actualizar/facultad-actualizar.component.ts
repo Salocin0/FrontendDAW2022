@@ -12,9 +12,9 @@ import { FacultadesService } from '../servicios/facultades.service';
 })
 export class FacultadActualizarComponent implements OnInit {
   actualizarFacultad:any;
-  id!: BigInteger;
+  id: number=0;
   
-  constructor(private builder: FormBuilder, private router:Router, private servicioFacultades: FacultadesService, private Aroute:ActivatedRoute/*,/*facultad:Facultad*/) {
+  constructor(private builder: FormBuilder, private router:Router, private servicioFacultades: FacultadesService, private Aroute:ActivatedRoute) {
     //actualizarFacultad: facultad;
   }
 

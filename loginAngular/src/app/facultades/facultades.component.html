@@ -1,4 +1,4 @@
-<form [formGroup]="filtrarFacultadesForm" (ngSubmit)="onFiltrar()">
+<form [formGroup]="FacultadesForm" (ngSubmit)="onFiltrar()">
     <div class="mx-auto" style="width: 90%;">
         <h1>Facultades</h1>
         <div class="row">
@@ -16,9 +16,9 @@
         <table class="table table-bordered">
             <thead class="table-dark">
                 <tr class="col-md-auto">
-                    <th  scope="col" (click)="onOrdenarXNombre()"><i class="fa-solid fa-circle"></i> Nombre </th>
-                    <th  scope="col" (click)="onOrdenarXCodigo()"><i class="fa-solid fa-circle-arrow-up"></i> Codigo</th>
-                    <th  scope="col" (click)="onOrdenarXCodigoNumerico()"><i class="fa-solid fa-arrow-down-short-wide"></i> Codigo Numerico</th>
+                    <th scope="col" (click)="onOrdenarXNombre()"><div [hidden]="iconNombre[0]===false">Nombre <i class="fa-solid fa-circle" ></i></div><div [hidden]="iconNombre[1]===false">Nombre <i class="fa-solid fa-circle-arrow-up"></i></div><div [hidden]="iconNombre[2]===false">Nombre <i class="fa-solid fa-circle-arrow-down"></i></div></th>
+                    <th scope="col" (click)="onOrdenarXCodigo()"><div [hidden]="iconCodigo[0]===false">Codigo <i class="fa-solid fa-circle" ></i></div><div [hidden]="iconCodigo[1]===false">Codigo <i class="fa-solid fa-circle-arrow-up"></i></div><div [hidden]="iconCodigo[2]===false">Codigo <i class="fa-solid fa-circle-arrow-down"></i></div></th>
+                    <th scope="col" (click)="onOrdenarXCodigoNumerico()"><div [hidden]="iconCodigoNumerico[0]===false">Codigo Numerico <i class="fa-solid fa-circle" ></i></div><div [hidden]="iconCodigoNumerico[1]===false">Codigo Numerico <i class="fa-solid fa-circle-arrow-up"></i></div><div [hidden]="iconCodigoNumerico[2]===false">Codigo Numerico <i class="fa-solid fa-circle-arrow-down"></i></div></th>
                     <th  scope="col" >Acciones</th>
                 </tr>
             </thead>

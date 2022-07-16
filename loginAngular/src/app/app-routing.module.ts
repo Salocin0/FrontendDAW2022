@@ -1,6 +1,7 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 import { FacultadActualizarComponent } from './facultad-actualizar/facultad-actualizar.component';
+import { FacultadConsultarComponent } from './facultad-consultar/facultad-consultar.component';
 import { FacultadNuevoComponent } from './facultad-nuevo/facultad-nuevo.component';
 import { FacultadesComponent } from './facultades/facultades.component';
 import { HomeComponent } from './home/home.component';
@@ -16,7 +17,7 @@ const routes: Routes = [
   {path:'jugador-nuevo',component:JugadorNuevoComponent},
   {path:'facultades',component:FacultadesComponent},
   {path:'facultad-nuevo',component:FacultadNuevoComponent},
-
+  {path:'facultad-consultar',component:FacultadConsultarComponent},
   {path: '**', redirectTo: 'login'}
   
 ];

@@ -10,9 +10,13 @@ import { FacultadesService } from '../servicios/facultades.service';
   styleUrls: ['./facultades.component.css']
 })
 export class FacultadesComponent implements OnInit {
+  iconNombre: boolean[] = [true,false,false];
+  iconCodigo: boolean[] = [true,false,false];
+  iconCodigoNumerico: boolean[] = [true,false,false];
 
+  
   constructor(private router: Router, private servicioFacultades: FacultadesService, private formBuilder: FormBuilder) { 
-    this.filtrarFacultadesForm = this.formBuilder.group({
+    this.FacultadesForm = this.formBuilder.group({
       nombre:[""],
       codigo:[""],
       codigoNumerico:[""],
@@ -20,7 +24,7 @@ export class FacultadesComponent implements OnInit {
   }
 
   facultades: any[] = [];
-  filtrarFacultadesForm: FormGroup;
+  FacultadesForm: FormGroup;
   
   ngOnInit(): void {
     this.obtenerFacultades();
@@ -43,16 +47,44 @@ export class FacultadesComponent implements OnInit {
   }
 
   onFiltrar(){
-    const nombre=this.filtrarFacultadesForm.controls["nombre"].value
-    const codigo=this.filtrarFacultadesForm.controls["codigo"].value
-    const codigoNumerico=this.filtrarFacultadesForm.controls["codigoNumerico"].value
-    this.servicioFacultades.getFacultadesFiltro(nombre,codigo,codigoNumerico).subscribe(listaFacultades =>{this.facultades=listaFacultades;})
+    const nombre=this.FacultadesForm.controls["nombre"].value
+    const codigo=this.FacultadesForm.controls["codigo"].value
+    const codigoNumerico=this.FacultadesForm.controls["codigoNumerico"].value
+    if(this.iconNombre[0]===true&&this.iconCodigo[0]==true&&this.iconCodigoNumerico[0]===true){
+      this.servicioFacultades.getFacultadesFiltro(nombre,codigo,codigoNumerico).subscribe(listaFacultades =>{this.facultades=listaFacultades;})
+      return
+    }
+    if(this.iconNombre[1]===true){//nombre asc
+      const orden="ASC"
+      this.servicioFacultades.getFacultadesFiltroOrdenNombre(nombre,codigo,codigoNumerico,orden).subscribe(listaFacultades =>{this.facultades=listaFacultades;})
+    }
+    if(this.iconNombre[2]===true){//nombre des
+      const orden="DESC"
+      this.servicioFacultades.getFacultadesFiltroOrdenNombre(nombre,codigo,codigoNumerico,orden).subscribe(listaFacultades =>{this.facultades=listaFacultades;})
+    }
+    if(this.iconCodigo[1]===true){//codigo asc
+      const orden="ASC"
+      this.servicioFacultades.getFacultadesFiltroOrdenCodigo(nombre,codigo,codigoNumerico,orden).subscribe(listaFacultades =>{this.facultades=listaFacultades;})
+    }
+    if(this.iconCodigo[2]===true){//codigo des
+      const orden="DESC"
+      this.servicioFacultades.getFacultadesFiltroOrdenCodigo(nombre,codigo,codigoNumerico,orden).subscribe(listaFacultades =>{this.facultades=listaFacultades;})
+    }
+    if(this.iconCodigoNumerico[1]===true){//codigonumerico asc
+      const orden="ASC"
+      this.servicioFacultades.getFacultadesFiltroOrdenCodigoNumerico(nombre,codigo,codigoNumerico,orden).subscribe(listaFacultades =>{this.facultades=listaFacultades;})
+    }
+    if(this.iconCodigoNumerico[2]===true){//codigonumerico des
+      const orden="DESC"
+      this.servicioFacultades.getFacultadesFiltroOrdenCodigoNumerico(nombre,codigo,codigoNumerico,orden).subscribe(listaFacultades =>{this.facultades=listaFacultades;})
+    }
+    
   }
 
   onLimpiarFiltro() {
-    this.filtrarFacultadesForm.controls["nombre"].setValue('')
-    this.filtrarFacultadesForm.controls["codigo"].setValue('')
-    this.filtrarFacultadesForm.controls["codigoNumerico"].setValue('')
+    this.FacultadesForm.controls["nombre"].setValue('')
+    this.FacultadesForm.controls["codigo"].setValue('')
+    this.FacultadesForm.controls["codigoNumerico"].setValue('')
     this.onFiltrar()
   }
 
@@ -70,14 +102,79 @@ export class FacultadesComponent implements OnInit {
   }
 
   onConsultar(facultad:Facultad){
-    //setea la pagina actual - 1, si la pagina actual no es la primera 
-    //muestra la pagina actual
+    this.router.navigate(['facultad-consultar',facultad.id])
   }
 
   onOrdenarXNombre(){
-    //ordenar de A a Z si es la primera vez q se aplica
-    //ordenar de Z a A si es la segunda vez q se aplica
-    //quita el orden por nombre si es la tercera ves
+    if(this.iconNombre[0]===true){
+      this.iconNombre=[false,true,false]
+      this.iconCodigo=[true,false,false]
+      this.iconCodigoNumerico=[true,false,false]
+      this.onFiltrar()
+      return
+    }
+    if(this.iconNombre[2]===true){
+      this.iconNombre=[true,false,false]
+      this.iconCodigo=[true,false,false]
+      this.iconCodigoNumerico=[true,false,false]
+      this.onFiltrar()
+      return
+    }
+    if(this.iconNombre[1]===true){
+      this.iconNombre=[false,false,true]
+      this.iconCodigo=[true,false,false]
+      this.iconCodigoNumerico=[true,false,false]
+      this.onFiltrar()
+      return
+    }
+  }
+
+  onOrdenarXCodigo(){
+    if(this.iconCodigo[0]===true){
+      this.iconCodigo=[false,true,false]
+      this.iconNombre=[true,false,false]
+      this.iconCodigoNumerico=[true,false,false]
+      this.onFiltrar()
+      return
+    }
+    if(this.iconCodigo[2]===true){
+      this.iconCodigo=[true,false,false]
+      this.iconNombre=[true,false,false]
+      this.iconCodigoNumerico=[true,false,false]
+      this.onFiltrar()
+      return
+    }
+    if(this.iconCodigo[1]===true){
+      this.iconCodigo=[false,false,true]
+      this.iconNombre=[true,false,false]
+      this.iconCodigoNumerico=[true,false,false]
+      this.onFiltrar()
+      return
+    }
+  }
+  
+  onOrdenarXCodigoNumerico(){
+    if(this.iconCodigoNumerico[0]===true){
+      this.iconCodigoNumerico=[false,true,false]
+      this.iconNombre=[true,false,false]
+      this.iconCodigo=[true,false,false]
+      this.onFiltrar()
+      return
+    }
+    if(this.iconCodigoNumerico[2]===true){
+      this.iconCodigoNumerico=[true,false,false]
+      this.iconNombre=[true,false,false]
+      this.iconCodigo=[true,false,false]
+      this.onFiltrar()
+      return
+    }
+    if(this.iconCodigoNumerico[1]===true){
+      this.iconCodigoNumerico=[false,false,true]
+      this.iconNombre=[true,false,false]
+      this.iconCodigo=[true,false,false]
+      this.onFiltrar()
+      return
+    }
   }
 
   onPaginaSiguiente(){
@@ -90,13 +187,4 @@ export class FacultadesComponent implements OnInit {
     //muestra la pagina actual
   }
   
-  onOrdenarXCodigo(){
-    //setea la pagina actual - 1, si la pagina actual no es la primera 
-    //muestra la pagina actual
-  }
-  onOrdenarXCodigoNumerico(){
-    //setea la pagina actual - 1, si la pagina actual no es la primera 
-    //muestra la pagina actual
-  }
-
 }

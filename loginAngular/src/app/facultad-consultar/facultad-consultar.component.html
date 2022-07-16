@@ -1,0 +1,24 @@
+<form>
+    <div class="mx-auto" style="width: 50% ;">
+        <fieldset>
+            <legend align="center">Facultad</legend>
+            <div>
+                <div class="mb-3">
+                    <label for="">Id{{ ": "+facultad.id}}</label>
+                </div>
+                <div class="mb-3">
+                    <label for="">Nombre{{ ": "+facultad.nombre}}</label>
+                </div>
+                <div class="mb-3">
+                    <label for="">Codigo{{ ": "+facultad.codigo}}</label>
+                </div>
+                <div class="mb-3">
+                    <label for="">Codigo Numerico{{ ": "+facultad.codigoNumerico}}</label>
+                </div>
+                <div>
+                    <button style="margin: 10px" (click)="onVolver()" type="submit" class="btn btn-danger"><i class="fa-solid fa-arrow-right-from-bracket"></i> Volver</button>
+                </div>
+            </div> 
+        </fieldset>
+    </div>
+</form>

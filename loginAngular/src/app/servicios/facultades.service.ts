@@ -24,8 +24,8 @@ export class FacultadesService {
     return this.httpClient.delete<Facultad>(`${this.URLBase}`+"/"+facultad.id)
   }
   
-  getFacultad(facultad:Facultad): Observable<Facultad>{
-    return this.httpClient.get<Facultad>(`${this.URLBase}`+"/"+facultad.id);
+  getFacultad(id:number): Observable<Facultad>{
+    return this.httpClient.get<Facultad>(`${this.URLBase}`+"/"+id);
   }
 
   getFacultades(): Observable<Facultad[]>{
@@ -34,6 +34,18 @@ export class FacultadesService {
 
   getFacultadesFiltro(nombre:String,codigo:String,codigoNumerico:String): Observable<Facultad[]>{
     return this.httpClient.get<Facultad[]>(`${this.URLBase}`+"/?nombre="+nombre+"&codigo="+codigo+"&codigoNumerico="+codigoNumerico);
+  }
+  
+  getFacultadesFiltroOrdenNombre(nombre:String,codigo:String,codigoNumerico:String,orden:String): Observable<Facultad[]>{
+    return this.httpClient.get<Facultad[]>(`${this.URLBase}`+"/nombre/"+orden+"?nombre="+nombre+"&codigo="+codigo+"&codigoNumerico="+codigoNumerico);
+  }
+
+  getFacultadesFiltroOrdenCodigo(nombre:String,codigo:String,codigoNumerico:String,orden:String): Observable<Facultad[]>{
+    return this.httpClient.get<Facultad[]>(`${this.URLBase}`+"/codigo/"+orden+"?nombre="+nombre+"&codigo="+codigo+"&codigoNumerico="+codigoNumerico);
+  }
+  
+  getFacultadesFiltroOrdenCodigoNumerico(nombre:String,codigo:String,codigoNumerico:String,orden:String): Observable<Facultad[]>{
+    return this.httpClient.get<Facultad[]>(`${this.URLBase}`+"/codigoNumerico/"+orden+"?nombre="+nombre+"&codigo="+codigo+"&codigoNumerico="+codigoNumerico);
   }
 
 }
