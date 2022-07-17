@@ -1,22 +1,26 @@
-<form>
+<form [formGroup]="consultarForm">
     <div class="mx-auto" style="width: 50% ;">
         <fieldset>
             <legend align="center">Facultad</legend>
             <div>
                 <div class="mb-3">
-                    <label for="">Id{{ ": "+facultad.id}}</label>
+                    <label for="">Id</label>
+                    <input type="text" class="form-control" formControlName="Id" readonly="readonly">
                 </div>
                 <div class="mb-3">
-                    <label for="">Nombre{{ ": "+facultad.nombre}}</label>
+                    <label for="" >Nombre</label>
+                    <input type="text" class="form-control" formControlName="Nombre" readonly="readonly">
                 </div>
                 <div class="mb-3">
-                    <label for="">Codigo{{ ": "+facultad.codigo}}</label>
+                    <label for="">Codigo</label>
+                    <input type="text" class="form-control" formControlName="Codigo" readonly="readonly">
                 </div>
                 <div class="mb-3">
-                    <label for="">Codigo Numerico{{ ": "+facultad.codigoNumerico}}</label>
+                    <label for="">Codigo Numerico</label>
+                    <input type="text" class="form-control" formControlName="CodigoNumerico" readonly="readonly">
                 </div>
-                <div>
-                    <button style="margin: 10px" (click)="onVolver()" type="submit" class="btn btn-danger"><i class="fa-solid fa-arrow-right-from-bracket"></i> Volver</button>
+                <div align="right">
+                    <button (click)="onVolver()" type="submit" class="btn btn-danger"><i class="fa-solid fa-arrow-right-from-bracket"></i> Volver</button>
                 </div>
             </div> 
         </fieldset>

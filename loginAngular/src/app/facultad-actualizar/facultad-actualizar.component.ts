@@ -19,7 +19,6 @@ export class FacultadActualizarComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    //facultad Facultad = this.Aroute.snapshot.paramMap.get('facultad')
     this.id=this.Aroute.snapshot.params['id']
     this.registroForm.controls['Nombre'].setValue(this.Aroute.snapshot.params['nombre']);
     this.registroForm.controls['Codigo'].setValue(this.Aroute.snapshot.params['codigo']);
@@ -57,7 +56,7 @@ export class FacultadActualizarComponent implements OnInit {
   }
 
   onVolver(){
-    this.router.navigate(['home'])
+    this.router.navigate(['facultades'])
   }
 
 }

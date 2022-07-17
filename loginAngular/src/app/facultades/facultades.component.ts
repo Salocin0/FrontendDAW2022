@@ -102,7 +102,7 @@ export class FacultadesComponent implements OnInit {
   }
 
   onConsultar(facultad:Facultad){
-    this.router.navigate(['facultad-consultar',facultad.id])
+    this.router.navigate(['facultad-consultar',facultad])
   }
 
   onOrdenarXNombre(){
