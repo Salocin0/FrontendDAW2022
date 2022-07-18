@@ -38,9 +38,9 @@
             </tbody>
         </table>
         <div align="center">
-            <button (click)="onPaginaSiguiente()" class="btn btn-primary" style="margin: 10px"><i class="fa-solid fa-angle-left"></i></button>
-            <label>1/x</label><!--funcion para cambiar el numero dependiendo la paginacion -->
-            <button (click)="onPaginaAnterior()" class="btn btn-primary" style="margin: 10px"><i class="fa-solid fa-angle-right"></i></button>
+            <button (click)="onPaginaAnterior()" class="btn btn-primary" style="margin: 10px"><i class="fa-solid fa-angle-left"></i></button>
+            <label>{{this.page+1}}/{{this.totalPages}}</label><!--funcion para cambiar el numero dependiendo la paginacion -->
+            <button (click)="onPaginaSiguiente()" class="btn btn-primary" style="margin: 10px"><i class="fa-solid fa-angle-right"></i></button>
         </div>
         <div align="right">
             <button (click)="onNuevoFacultadClick()" style="margin: 10px" class="btn btn-success" ><i class="fa-solid fa-plus"></i></button>
@@ -48,5 +48,3 @@
         </div>
     </div>
 </form>
-
-<!--[ngClass]="" -->

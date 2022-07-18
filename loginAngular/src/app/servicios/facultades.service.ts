@@ -11,6 +11,10 @@ export class FacultadesService {
   private URLBase = "http://localhost:8080/facultades";
 
   constructor(private httpClient:HttpClient) { }
+
+  public getFacultadesPage(nombre:string,codigo:string,codigoNumerico:string, page: number, size:number, order:String, asc:boolean):Observable<any> {
+    return this.httpClient.get<any>(`${this.URLBase}`+`/facultadesPage?`+`page=${page}&size=${size}&order=${order}&asc=${asc}&nombre=${nombre}&codigo=${codigo}&codigoNumerico=${codigoNumerico}`);
+  }
   
   guardarFacultad(facultad:Facultad):Observable<Facultad>{
     return this.httpClient.post<Facultad>(`${this.URLBase}`,facultad)
