@@ -10,19 +10,20 @@ import { FacultadesService } from '../servicios/facultades.service';
   styleUrls: ['./facultades.component.css']
 })
 export class FacultadesComponent implements OnInit {
+  //atributos
   iconNombre: boolean[] = [true,false,false];
   iconCodigo: boolean[] = [true,false,false];
   iconCodigoNumerico: boolean[] = [true,false,false];
-
+  facultades: any[] = [];
+  FacultadesForm: FormGroup;
   page=0;
   size=5;
   order="id"
   asc=true;
-
   primera=false;
   ultima=false;
   totalPages=0;
-  
+  //constructor
   constructor(private router: Router, private servicioFacultades: FacultadesService, private formBuilder: FormBuilder) { 
     this.FacultadesForm = this.formBuilder.group({
       nombre:[""],
@@ -30,14 +31,11 @@ export class FacultadesComponent implements OnInit {
       codigoNumerico:[""],
     })
   }
-
-  facultades: any[] = [];
-  FacultadesForm: FormGroup;
-  
+  //metodos al iniciar
   ngOnInit(): void {
     this.obtenerFacultades("","","");
   }
-
+  //traer la facultades paginadas con los filtros
   private obtenerFacultades(nombre:string,codigo:string,codigoNumerico:string){
     this.servicioFacultades.getFacultadesPage(nombre,codigo,codigoNumerico,this.page,this.size,this.order,this.asc).subscribe(listaFacultades =>{
       this.facultades=listaFacultades.content;
@@ -46,50 +44,46 @@ export class FacultadesComponent implements OnInit {
       this.totalPages=listaFacultades.totalPages;
     })
   }
-
+  //ir a registrar facultad
   onNuevoFacultadClick(){
     this.router.navigate(['facultad-nuevo'])
   }
-
-  editar(id: number){
-    alert(id)
-  }
-
+  //alerta eliminar facultad
   eliminar(id: number){
     alert("Eliminando a "+id)
   }
-
+  //traer facultades con filtro
   onFiltrar(){
     const nombre=this.FacultadesForm.controls["nombre"].value
     const codigo=this.FacultadesForm.controls["codigo"].value
     const codigoNumerico=this.FacultadesForm.controls["codigoNumerico"].value
     this.obtenerFacultades(nombre,codigo,codigoNumerico)
   }
-
+  //limpiar filtro
   onLimpiarFiltro() {
     this.FacultadesForm.controls["nombre"].setValue('')
     this.FacultadesForm.controls["codigo"].setValue('')
     this.FacultadesForm.controls["codigoNumerico"].setValue('')
     this.onFiltrar()
   }
-
+  //volver al menu principal
   onVolver(){
     this.router.navigate(['home'])
   }
-
+  //ir a modificar facultad
   onModificar(facultad:Facultad){
     this.router.navigate(['facultad-actualizar',facultad])
   }
-
+  //borrar facultad
   onBorrar(facultad:Facultad){
     this.servicioFacultades.eliminarFacultad(facultad).subscribe(facultad =>{console.log(facultad);})
     this.servicioFacultades.getFacultades().subscribe(listaFacultades =>{this.facultades=listaFacultades;})
   }
-
+  //ir a consultar facultad
   onConsultar(facultad:Facultad){
     this.router.navigate(['facultad-consultar',facultad])
   }
-
+  //ordenar asc, desc o no ordenar por nombre
   onOrdenarXNombre(){
     if(this.iconNombre[0]===true){
       this.iconNombre=[false,true,false]
@@ -119,7 +113,7 @@ export class FacultadesComponent implements OnInit {
       return
     }
   }
-
+  //ordenar asc, desc o no ordenar por codigo
   onOrdenarXCodigo(){
     if(this.iconCodigo[0]===true){
       this.iconCodigo=[false,true,false]
@@ -149,7 +143,7 @@ export class FacultadesComponent implements OnInit {
       return
     }
   }
-  
+  //ordenar asc, desc o no ordenar por codigoNumerico
   onOrdenarXCodigoNumerico(){
     if(this.iconCodigoNumerico[0]===true){
       this.iconCodigoNumerico=[false,true,false]
@@ -179,24 +173,23 @@ export class FacultadesComponent implements OnInit {
       return
     }
   }
-
+  //ordenar asc o desc con una columna especifica
   sort(asc:boolean,order:string){
     this.asc=asc
     this.order=order
   }
-
+  //avanzar pagina
   onPaginaSiguiente(){
     if(!this.ultima){
       this.page=this.page+1
       this.onFiltrar()
     }
   }
-
+  //retroceder pagina
   onPaginaAnterior(){
     if(!this.primera){
       this.page=this.page-1
       this.onFiltrar()
     }
-  }
-  
+  } 
 }

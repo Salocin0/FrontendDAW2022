@@ -1,18 +1,23 @@
 <form [formGroup]="FacultadesForm" (ngSubmit)="onFiltrar()">
     <div class="mx-auto" style="width: 90%;">
+        <!--titulo-->
         <h1>Facultades</h1>
         <div class="row">
+            <!--sub titulo-->
             <label class="form-label">Filtros</label>
             <div class="col btn-group btn-group-block mb-3">
+                <!--text filtros-->
                 <input formControlName="nombre" class="form-control" type="text" style="width : 100%; margin-right: 10px" placeholder="Filtro para nombre">
                 <input formControlName="codigo" class="form-control" type="text" style="width : 100%; margin-right: 10px" placeholder="Filtro para el codigo">
                 <input formControlName="codigoNumerico" class="form-control" type="text" style="width : 100%; margin-right: 10px" placeholder="Filtro para el codigo numerico">
             </div>
+            <!--botones filtro-->
             <div class="col-3 btn-group btn-group-block mb-3" align="right">
                 <button class="btn btn-block btn-success" (click)="onFiltrar()">Filtrar <i class="fa-solid fa-filter"></i></button>
                 <button class="btn btn-block btn-danger" (click)="onLimpiarFiltro()">Borrar <i class="fa-solid fa-trash"></i></button>
             </div> 
         </div>
+        <!--tabla facultades-->
         <table class="table table-bordered text-center">
             <thead class="table-dark">
                 <tr class="col-md-auto">
@@ -37,11 +42,13 @@
                 </tr>
             </tbody>
         </table>
+        <!--botones paginas-->
         <div align="center">
             <button (click)="onPaginaAnterior()" class="btn btn-primary" style="margin: 10px"><i class="fa-solid fa-angle-left"></i></button>
             <label>{{this.page+1}}/{{this.totalPages}}</label><!--funcion para cambiar el numero dependiendo la paginacion -->
             <button (click)="onPaginaSiguiente()" class="btn btn-primary" style="margin: 10px"><i class="fa-solid fa-angle-right"></i></button>
         </div>
+        <!--botones volver + nuevo registro-->
         <div align="right">
             <button (click)="onNuevoFacultadClick()" style="margin: 10px" class="btn btn-success" ><i class="fa-solid fa-plus"></i></button>
             <button (click)="onVolver()" class="btn btn-danger">Volver <i class="fa-solid fa-arrow-right-from-bracket"></i></button>
