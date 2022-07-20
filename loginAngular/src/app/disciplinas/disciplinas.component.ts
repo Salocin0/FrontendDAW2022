@@ -1,21 +1,21 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup } from '@angular/forms';
 import { Router } from '@angular/router';
-import { Facultad } from '../dominio/facultad';
-import { FacultadesService } from '../servicios/facultades.service';
+import { Disciplina } from '../dominio/disciplina';
+import { DisciplinasService } from '../servicios/disciplinas.service';
 
 @Component({
-  selector: 'app-facultades',
-  templateUrl: './facultades.component.html',
-  styleUrls: ['./facultades.component.css']
+  selector: 'app-disciplinas',
+  templateUrl: './disciplinas.component.html',
+  styleUrls: ['./disciplinas.component.css']
 })
-export class FacultadesComponent implements OnInit {
+export class DisciplinasComponent implements OnInit {
   //atributos
   iconNombre: boolean[] = [true,false,false];
   iconCodigo: boolean[] = [true,false,false];
-  iconCodigoNumerico: boolean[] = [true,false,false];
-  facultades: any[] = [];
-  FacultadesForm: FormGroup;
+  iconDescripcion: boolean[] = [true,false,false];
+  disciplinas: any[] = [];
+  DisciplinasForm: FormGroup;
   page=0;
   size=5;
   order="id"
@@ -24,29 +24,29 @@ export class FacultadesComponent implements OnInit {
   ultima=false;
   totalPages=0;
   //constructor
-  constructor(private router: Router, private servicioFacultades: FacultadesService, private formBuilder: FormBuilder) { 
-    this.FacultadesForm = this.formBuilder.group({
+  constructor(private router: Router, private servicioDisciplinas: DisciplinasService, private formBuilder: FormBuilder) { 
+    this.DisciplinasForm = this.formBuilder.group({
       nombre:[""],
       codigo:[""],
-      codigoNumerico:[""],
+      descripcion:[""],
     })
   }
   //metodos al iniciar
   ngOnInit(): void {
-    this.obtenerFacultades("","","");
+    this.obtenerDisciplinas("","","");
   }
   //traer la facultades paginadas con los filtros
-  private obtenerFacultades(nombre:string,codigo:string,codigoNumerico:string){
-    this.servicioFacultades.getFacultadesPage(nombre,codigo,codigoNumerico,this.page,this.size,this.order,this.asc).subscribe(listaFacultades =>{
-      this.facultades=listaFacultades.content;
-      this.primera=listaFacultades.first;
-      this.ultima=listaFacultades.last;
-      this.totalPages=listaFacultades.totalPages;
+  private obtenerDisciplinas(nombre:string,codigo:string,codigoNumerico:string){
+    this.servicioDisciplinas.getDisciplinasPage(nombre,codigo,codigoNumerico,this.page,this.size,this.order,this.asc).subscribe(listaDisciplinas =>{
+      this.disciplinas=listaDisciplinas.content;
+      this.primera=listaDisciplinas.first;
+      this.ultima=listaDisciplinas.last;
+      this.totalPages=listaDisciplinas.totalPages;
     })
   }
   //ir a registrar facultad
-  onNuevoFacultadClick(){
-    this.router.navigate(['facultad-nuevo'])
+  onNuevoDisciplinaClick(){
+    this.router.navigate(['disciplina-nuevo'])
   }
   //alerta eliminar facultad
   eliminar(id: number){
@@ -54,16 +54,16 @@ export class FacultadesComponent implements OnInit {
   }
   //traer facultades con filtro
   onFiltrar(){
-    const nombre=this.FacultadesForm.controls["nombre"].value
-    const codigo=this.FacultadesForm.controls["codigo"].value
-    const codigoNumerico=this.FacultadesForm.controls["codigoNumerico"].value
-    this.obtenerFacultades(nombre,codigo,codigoNumerico)
+    const nombre=this.DisciplinasForm.controls["nombre"].value
+    const codigo=this.DisciplinasForm.controls["codigo"].value
+    const codigoNumerico=this.DisciplinasForm.controls["descripcion"].value
+    this.obtenerDisciplinas(nombre,codigo,codigoNumerico)
   }
   //limpiar filtro
   onLimpiarFiltro() {
-    this.FacultadesForm.controls["nombre"].setValue('')
-    this.FacultadesForm.controls["codigo"].setValue('')
-    this.FacultadesForm.controls["codigoNumerico"].setValue('')
+    this.DisciplinasForm.controls["nombre"].setValue('')
+    this.DisciplinasForm.controls["codigo"].setValue('')
+    this.DisciplinasForm.controls["descripcion"].setValue('')
     this.onFiltrar()
   }
   //volver al menu principal
@@ -71,17 +71,17 @@ export class FacultadesComponent implements OnInit {
     this.router.navigate(['home'])
   }
   //ir a modificar facultad
-  onModificar(facultad:Facultad){
-    this.router.navigate(['facultad-actualizar',facultad])
+  onModificar(disciplina:Disciplina){
+    this.router.navigate(['disciplina-actualizar',disciplina])
   }
   //borrar facultad
-  onBorrar(facultad:Facultad){
-    this.servicioFacultades.eliminarFacultad(facultad).subscribe(facultad =>{console.log(facultad);})
+  onBorrar(disciplina:Disciplina){
+    this.servicioDisciplinas.eliminarDisciplinas(disciplina).subscribe(disciplina =>{console.log(disciplina);})
     this.onFiltrar();
   }
   //ir a consultar facultad
-  onConsultar(facultad:Facultad){
-    this.router.navigate(['facultad-consultar',facultad])
+  onConsultar(disciplina:Disciplina){
+    this.router.navigate(['disciplina-consultar',disciplina])
   }
   //ordenar asc, desc o no ordenar por nombre
   onOrdenarXNombre(){
@@ -90,7 +90,7 @@ export class FacultadesComponent implements OnInit {
       //acendente por nombre
       this.sort(true,"nombre")
       this.iconCodigo=[true,false,false]
-      this.iconCodigoNumerico=[true,false,false]
+      this.iconDescripcion=[true,false,false]
       this.onFiltrar()
       return
     }
@@ -99,7 +99,7 @@ export class FacultadesComponent implements OnInit {
       //sin orden por nombre (volver a id)
       this.sort(true,"id")
       this.iconCodigo=[true,false,false]
-      this.iconCodigoNumerico=[true,false,false]
+      this.iconDescripcion=[true,false,false]
       this.onFiltrar()
       return
     }
@@ -108,7 +108,7 @@ export class FacultadesComponent implements OnInit {
       //descendente por nombre
       this.sort(false,"nombre")
       this.iconCodigo=[true,false,false]
-      this.iconCodigoNumerico=[true,false,false]
+      this.iconDescripcion=[true,false,false]
       this.onFiltrar()
       return
     }
@@ -120,7 +120,7 @@ export class FacultadesComponent implements OnInit {
       //acendente por codigo
       this.sort(true,"codigo")
       this.iconNombre=[true,false,false]
-      this.iconCodigoNumerico=[true,false,false]
+      this.iconDescripcion=[true,false,false]
       this.onFiltrar()
       return
     }
@@ -129,7 +129,7 @@ export class FacultadesComponent implements OnInit {
       //sin orden por codigo (volver a id)
       this.sort(true,"id")
       this.iconNombre=[true,false,false]
-      this.iconCodigoNumerico=[true,false,false]
+      this.iconDescripcion=[true,false,false]
       this.onFiltrar()
       return
     }
@@ -138,35 +138,35 @@ export class FacultadesComponent implements OnInit {
       //descendente por codigo
       this.sort(false,"codigo")
       this.iconNombre=[true,false,false]
-      this.iconCodigoNumerico=[true,false,false]
+      this.iconDescripcion=[true,false,false]
       this.onFiltrar()
       return
     }
   }
-  //ordenar asc, desc o no ordenar por codigoNumerico
-  onOrdenarXCodigoNumerico(){
-    if(this.iconCodigoNumerico[0]===true){
-      this.iconCodigoNumerico=[false,true,false]
-      //acendente por codigo numerico
-      this.sort(true,"codigoNumerico")
+  //ordenar asc, desc o no ordenar por descripcion
+  onOrdenarXDescripcion(){
+    if(this.iconDescripcion[0]===true){
+      this.iconDescripcion=[false,true,false]
+      //acendente por descripcion
+      this.sort(true,"descripcion")
       this.iconNombre=[true,false,false]
       this.iconCodigo=[true,false,false]
       this.onFiltrar()
       return
     }
-    if(this.iconCodigoNumerico[2]===true){
-      this.iconCodigoNumerico=[true,false,false]
-      //sin orden por codigo numerico (volver a id)
+    if(this.iconDescripcion[2]===true){
+      this.iconDescripcion=[true,false,false]
+      //sin orden por descripcion (volver a id)
       this.sort(true,"id")
       this.iconNombre=[true,false,false]
       this.iconCodigo=[true,false,false]
       this.onFiltrar()
       return
     }
-    if(this.iconCodigoNumerico[1]===true){
-      this.iconCodigoNumerico=[false,false,true]
-      //descendente por codigo numerico
-      this.sort(false,"codigoNumerico")
+    if(this.iconDescripcion[1]===true){
+      this.iconDescripcion=[false,false,true]
+      //descendente por descripcion
+      this.sort(false,"descripcion")
       this.iconNombre=[true,false,false]
       this.iconCodigo=[true,false,false]
       this.onFiltrar()

@@ -5,27 +5,27 @@
             <div class="row">
                 <div class="form-group col mb-3">
                     <label class="form-label" for="disciplina">Disciplina</label>
-                    <select id="disciplina" class="form-select" formControlName="filtroDisciplina">
+                    <select id="disciplina" class="form-select" formControlName="filtroDisciplina" (click)="onFiltrar()">
                     <option value="">Seleccionar</option>
-                        <option *ngFor="let n of disciplinas" [value]="n.codigo">
+                        <option *ngFor="let n of disciplinas" [value]="n.nombre">
                             {{n.nombre}}
                         </option>
                     </select>
                 </div>
                 <div class="form-group col mb-3">
                     <label class="form-label" for="disciplina">Facultad</label>
-                    <select id="disciplina" class="form-select" formControlName="filtroFacultad">
+                    <select id="disciplina" class="form-select" formControlName="filtroFacultad" (click)="onFiltrar()">
                     <option value="">Seleccionar</option>
-                        <option *ngFor="let n of facultades" [value]="n.codigo">                                
+                        <option *ngFor="let n of facultades" [value]="n.nombre" >                                
                             {{n.nombre}}
                         </option>
                     </select>
                 </div>
                 <div class="form-group col mb-3">
                     <label class="form-label" for="nacionalidad">Nacionalidad</label>
-                    <select id="nacionalidad" class="form-select" formControlName="filtroNacionalidad">
+                    <select id="nacionalidad" class="form-select" formControlName="filtroNacionalidad" (click)="onFiltrar()">
                     <option value="">Seleccionar</option>
-                        <option *ngFor="let n of nacionalidades" [value]="n.alpha3Code">
+                        <option *ngFor="let n of nacionalidades" [value]="n.nombre">
                             {{n.name}}
                         </option>
                     </select>
@@ -34,27 +34,26 @@
         <div class="row">
             <label class="form-label">Filtro</label>
             <div class="col btn-group btn-group-block mb-3">
-                <input type="text" style="width : 100%" placeholder="Ingrese cadena">
+                <input formControlName="filtro" class="form-control" type="text" style="width : 100%" placeholder="Ingrese cadena">
             </div>
             <div class="col-3 btn-group btn-group-block mb-3" align="right">
                 <button class="btn btn-block btn-success" (click)="onFiltrar()">Filtrar <i class="fa-solid fa-filter"></i></button>
-                <button class="btn btn-block btn-danger">Borrar <i class="fa-solid fa-trash-can"></i></button>
+                <button class="btn btn-block btn-danger" (click)="onLimpiarFiltro()">Borrar <i class="fa-solid fa-trash"></i></button>
             </div> 
         </div>
-        <table class="table table-bordered">
+        <table class="table table-bordered text-center">
             <thead class="table-dark">
                 <tr class="col-md-auto">
-                    <th  scope="col" (click)="onOrdenarXNombre()" ><i class="fa-solid fa-circle-arrow-down"></i> Nombre y Apellido</th>
-                    <th  scope="col" (click)="onOrdenarXFechaNacimiento()"><i class="fa-solid fa-circle"></i> Fecha Nacimiento</th>
-                    <th  scope="col" (click)="onOrdenarXDNI()"><i class="fa-solid fa-circle-arrow-up"></i> DNI</th>
-                    <th  scope="col" (click)="onOrdenarXFacultad()"><i class="fa-solid fa-arrow-down-short-wide"></i> Facultad</th>
-                    <th  scope="col" (click)="onOrdenarXDisciplina()"><i class="fa-solid fa-arrow-down-short-wide"></i> Disciplina</th>
-                    <th  scope="col" (click)="onOrdenarXNacionalidad()"><i class="fa-solid fa-arrow-down-short-wide"></i> Nacionalidad</th>
-                    <th  scope="col" (click)="onOrdenarXTelefono()">Telefono</th>
-                    <th  scope="col" (click)="onOrdenarXLegajo()">Legajo</th>
-                    <th  scope="col" (click)="onOrdenarXEMail()">E-Mail</th>
+                    <th  scope="col" (click)="onOrdenarXNombre()" ><div [hidden]="iconNombre[0]===false">Nombre <i class="fa-solid fa-circle" ></i></div><div [hidden]="iconNombre[1]===false">Nombre <i class="fa-solid fa-circle-arrow-up"></i></div><div [hidden]="iconNombre[2]===false">Nombre <i class="fa-solid fa-circle-arrow-down"></i></div></th>
+                    <th  scope="col" (click)="onOrdenarXFechaNacimiento()"><div [hidden]="iconFechaNacimiento[0]===false">Fecha Nacimiento <i class="fa-solid fa-circle" ></i></div><div [hidden]="iconFechaNacimiento[1]===false">Fecha Nacimiento <i class="fa-solid fa-circle-arrow-up"></i></div><div [hidden]="iconFechaNacimiento[2]===false">Fecha Nacimiento <i class="fa-solid fa-circle-arrow-down"></i></div></th>
+                    <th  scope="col" (click)="onOrdenarXDNI()"><div [hidden]="iconDNI[0]===false">DNI <i class="fa-solid fa-circle" ></i></div><div [hidden]="iconDNI[1]===false">DNI <i class="fa-solid fa-circle-arrow-up"></i></div><div [hidden]="iconDNI[2]===false">DNI <i class="fa-solid fa-circle-arrow-down"></i></div></th>
+                    <th  scope="col" (click)="onOrdenarXFacultad()"><div [hidden]="iconFacultad[0]===false">Facultad <i class="fa-solid fa-circle" ></i></div><div [hidden]="iconFacultad[1]===false">Facultad <i class="fa-solid fa-circle-arrow-up"></i></div><div [hidden]="iconFacultad[2]===false">Facultad <i class="fa-solid fa-circle-arrow-down"></i></div></th>
+                    <th  scope="col" (click)="onOrdenarXDisciplina()"><div [hidden]="iconDisciplina[0]===false">Disciplina <i class="fa-solid fa-circle" ></i></div><div [hidden]="iconDisciplina[1]===false">Disciplina <i class="fa-solid fa-circle-arrow-up"></i></div><div [hidden]="iconDisciplina[2]===false">Disciplina <i class="fa-solid fa-circle-arrow-down"></i></div></th>
+                    <th  scope="col" (click)="onOrdenarXNacionalidad()"><div [hidden]="iconNacionalidad[0]===false">Nacionalidad <i class="fa-solid fa-circle" ></i></div><div [hidden]="iconNacionalidad[1]===false">Nacionalidad <i class="fa-solid fa-circle-arrow-up"></i></div><div [hidden]="iconNacionalidad[2]===false">Nacionalidad <i class="fa-solid fa-circle-arrow-down"></i></div></th>
+                    <th  scope="col" (click)="onOrdenarXTelefono()"><div [hidden]="iconTelefono[0]===false">Telefono <i class="fa-solid fa-circle" ></i></div><div [hidden]="iconTelefono[1]===false">Telefono <i class="fa-solid fa-circle-arrow-up"></i></div><div [hidden]="iconTelefono[2]===false">Telefono <i class="fa-solid fa-circle-arrow-down"></i></div></th>
+                    <th  scope="col" (click)="onOrdenarXLegajo()"><div [hidden]="iconLegajo[0]===false">Legajo <i class="fa-solid fa-circle" ></i></div><div [hidden]="iconLegajo[1]===false">Legajo <i class="fa-solid fa-circle-arrow-up"></i></div><div [hidden]="iconLegajo[2]===false">Legajo <i class="fa-solid fa-circle-arrow-down"></i></div></th>
+                    <th  scope="col" (click)="onOrdenarXEMail()"><div [hidden]="iconEmail[0]===false">E-mail <i class="fa-solid fa-circle" ></i></div><div [hidden]="iconEmail[1]===false">E-mail <i class="fa-solid fa-circle-arrow-up"></i></div><div [hidden]="iconEmail[2]===false">E-mail <i class="fa-solid fa-circle-arrow-down"></i></div></th>
                     <th  scope="col" >Acciones</th>
-
                 </tr>
             </thead>
             <tbody>
@@ -70,17 +69,18 @@
                     <td>{{jugador.email}}</td>
                     <td>
                         <div align="center" class="btn-group btn-group-block">
-                            <button (click)="onModificar()" class="btn btn-success" ><i class="fa-solid fa-file-pen"></i></button>
-                            <button (click)="onBorrar()" class="btn btn-danger" ><i class="fa-solid fa-trash"></i></button>
+                            <button (click)="onConsultar(jugador)" class="btn btn-primary" ><i class="fa-solid fa-eye"></i></button>
+                            <button (click)="onModificar(jugador)" class="btn btn-success" ><i class="fa-solid fa-file-pen"></i></button>
+                            <button (click)="onBorrar(jugador)" class="btn btn-danger" ><i class="fa-solid fa-trash"></i></button>
                         </div>
                     </td>
                 </tr>
             </tbody>
         </table>
         <div align="center">
-            <button (click)="onPaginaSiguiente()" class="btn btn-primary" style="margin: 10px"><i class="fa-solid fa-angle-left"></i></button>
-            <label>1/x</label><!--funcion para cambiar el numero dependiendo la paginacion -->
-            <button (click)="onPaginaAnterior()" class="btn btn-primary" style="margin: 10px"><i class="fa-solid fa-angle-right"></i></button>
+            <button (click)="onPaginaAnterior()" class="btn btn-primary" style="margin: 10px"><i class="fa-solid fa-angle-left"></i></button>
+            <label>{{this.page+1}}/{{this.totalPages}}</label><!--funcion para cambiar el numero dependiendo la paginacion -->
+            <button (click)="onPaginaSiguiente()" class="btn btn-primary" style="margin: 10px"><i class="fa-solid fa-angle-right"></i></button>
         </div>
         <div align="right">
             <button (click)="onNuevoJugadorClick()" style="margin: 10px" class="btn btn-success" ><i class="fa-solid fa-plus"></i></button>
@@ -88,5 +88,3 @@
         </div>
     </div>
 </form>
-
-<!--[ngClass]="" -->

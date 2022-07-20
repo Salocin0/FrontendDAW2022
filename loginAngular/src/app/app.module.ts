@@ -14,6 +14,13 @@ import { FacultadNuevoComponent } from './facultad-nuevo/facultad-nuevo.componen
 import { FacultadesComponent } from './facultades/facultades.component';
 import { FacultadActualizarComponent } from './facultad-actualizar/facultad-actualizar.component';
 import { FacultadConsultarComponent } from './facultad-consultar/facultad-consultar.component';
+import { DisciplinasComponent } from './disciplinas/disciplinas.component';
+import { DisciplinaNuevoComponent } from './disciplina-nuevo/disciplina-nuevo.component';
+import { DisciplinaConsultarComponent } from './disciplina-consultar/disciplina-consultar.component';
+import { DisciplinaActualizarComponent } from './disciplina-actualizar/disciplina-actualizar.component';
+import { JugadorActualizarComponent } from './jugador-actualizar/jugador-actualizar.component';
+import { JugadorConsultarComponent } from './jugador-consultar/jugador-consultar.component';
+import { UsuarioNuevoComponent } from './usuario-nuevo/usuario-nuevo.component';
 @NgModule({
   declarations: [
     AppComponent,
@@ -25,6 +32,13 @@ import { FacultadConsultarComponent } from './facultad-consultar/facultad-consul
     FacultadesComponent,
     FacultadActualizarComponent,
     FacultadConsultarComponent,
+    DisciplinasComponent,
+    DisciplinaNuevoComponent,
+    DisciplinaConsultarComponent,
+    DisciplinaActualizarComponent,
+    JugadorActualizarComponent,
+    JugadorConsultarComponent,
+    UsuarioNuevoComponent,
     
   ],
   imports: [

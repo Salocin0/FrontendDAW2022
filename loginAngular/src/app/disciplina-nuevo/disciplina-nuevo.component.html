@@ -1,0 +1,30 @@
+<form [formGroup]="registroForm" (ngSubmit)="onSubmit()">
+    <div class="mx-auto" style="width: 50% ;">
+        <fieldset>
+            <!--titulo-->
+            <legend align="center">Datos Disciplina</legend>
+            <div>
+                <!--label + text nombre-->
+                <div class="mb-3">
+                    <label for="">Nombre</label>
+                    <input id="nombre" type="text" placeholder="Ingrese el nombre" class="form-control" formControlName="Nombre" [ngClass]="{'is-invalid': enviado===true && registroForm.controls['Nombre'].errors}">
+                </div>
+                <!--label + text codigo-->
+                <div class="mb-3">
+                    <label for="">Codigo</label>
+                    <input id="codigo" type="text" placeholder="Ingrese el codigo" class="form-control" formControlName="Codigo" [ngClass]="{'is-invalid': enviado===true && registroForm.controls['Codigo'].errors}">
+                </div>
+                <!--label + text descripcion-->
+                <div class="mb-3">
+                    <label for="">Descripcion</label>
+                    <input id="descripcion" type="text" placeholder="Ingrese descripcion" class="form-control" formControlName="Descripcion" [ngClass]="{'is-invalid': enviado===true && registroForm.controls['descripcion'].errors}">
+                </div>
+                <!--botones-->
+                <div>
+                    <button type="submit" class="btn btn-primary" (click)="onSubmit()"><i class="fa-solid fa-angle-down"></i> Registrar</button>
+                    <button style="margin: 10px" (click)="onVolver()" type="submit" class="btn btn-danger"><i class="fa-solid fa-arrow-right-from-bracket"></i> Volver</button>
+                </div>
+            </div> 
+        </fieldset>
+    </div>
+</form>

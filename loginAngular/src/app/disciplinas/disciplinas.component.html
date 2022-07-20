@@ -1,7 +1,7 @@
-<form [formGroup]="FacultadesForm" (ngSubmit)="onFiltrar()">
+<form [formGroup]="DisciplinasForm" (ngSubmit)="onFiltrar()">
     <div class="mx-auto" style="width: 90%;">
         <!--titulo-->
-        <h1>Facultades</h1>
+        <h1>Disciplinas</h1>
         <div class="row">
             <!--sub titulo-->
             <label class="form-label">Filtros</label>
@@ -9,7 +9,7 @@
                 <!--text filtros-->
                 <input formControlName="nombre" class="form-control" type="text" style="width : 100%; margin-right: 10px" placeholder="Filtro para nombre">
                 <input formControlName="codigo" class="form-control" type="text" style="width : 100%; margin-right: 10px" placeholder="Filtro para el codigo">
-                <input formControlName="codigoNumerico" class="form-control" type="text" style="width : 100%; margin-right: 10px" placeholder="Filtro para el codigo numerico">
+                <input formControlName="descripcion" class="form-control" type="text" style="width : 100%; margin-right: 10px" placeholder="Filtro para la descripcion">
             </div>
             <!--botones filtro-->
             <div class="col-3 btn-group btn-group-block mb-3" align="right">
@@ -23,20 +23,20 @@
                 <tr class="col-md-auto">
                     <th scope="col" (click)="onOrdenarXNombre()"><div [hidden]="iconNombre[0]===false">Nombre <i class="fa-solid fa-circle" ></i></div><div [hidden]="iconNombre[1]===false">Nombre <i class="fa-solid fa-circle-arrow-up"></i></div><div [hidden]="iconNombre[2]===false">Nombre <i class="fa-solid fa-circle-arrow-down"></i></div></th>
                     <th scope="col" (click)="onOrdenarXCodigo()"><div [hidden]="iconCodigo[0]===false">Codigo <i class="fa-solid fa-circle" ></i></div><div [hidden]="iconCodigo[1]===false">Codigo <i class="fa-solid fa-circle-arrow-up"></i></div><div [hidden]="iconCodigo[2]===false">Codigo <i class="fa-solid fa-circle-arrow-down"></i></div></th>
-                    <th scope="col" (click)="onOrdenarXCodigoNumerico()"><div [hidden]="iconCodigoNumerico[0]===false">Codigo Numerico <i class="fa-solid fa-circle" ></i></div><div [hidden]="iconCodigoNumerico[1]===false">Codigo Numerico <i class="fa-solid fa-circle-arrow-up"></i></div><div [hidden]="iconCodigoNumerico[2]===false">Codigo Numerico <i class="fa-solid fa-circle-arrow-down"></i></div></th>
+                    <th scope="col" (click)="onOrdenarXDescripcion()"><div [hidden]="iconDescripcion[0]===false">Descripcion <i class="fa-solid fa-circle" ></i></div><div [hidden]="iconDescripcion[1]===false">Descripcion <i class="fa-solid fa-circle-arrow-up"></i></div><div [hidden]="iconDescripcion[2]===false">Descripcion <i class="fa-solid fa-circle-arrow-down"></i></div></th>
                     <th  scope="col" >Acciones</th>
                 </tr>
             </thead>
             <tbody>
-                <tr class="col-md-auto" *ngFor = "let facultad of facultades">
-                    <td>{{facultad.nombre}}</td>
-                    <td>{{facultad.codigo}}</td>
-                    <td>{{facultad.codigoNumerico}}</td>
+                <tr class="col-md-auto" *ngFor = "let disciplina of disciplinas">
+                    <td>{{disciplina.nombre}}</td>
+                    <td>{{disciplina.codigo}}</td>
+                    <td>{{disciplina.descripcion}}</td>
                     <td>
                         <div align="center" class="btn-group btn-group-block">
-                            <button (click)="onConsultar(facultad)" class="btn btn-primary" ><i class="fa-solid fa-eye"></i></button>
-                            <button (click)="onModificar(facultad)" class="btn btn-success" ><i class="fa-solid fa-file-pen"></i></button>
-                            <button (click)="onBorrar(facultad)" class="btn btn-danger" ><i class="fa-solid fa-trash"></i></button>
+                            <button (click)="onConsultar(disciplina)" class="btn btn-primary" ><i class="fa-solid fa-eye"></i></button>
+                            <button (click)="onModificar(disciplina)" class="btn btn-success" ><i class="fa-solid fa-file-pen"></i></button>
+                            <button (click)="onBorrar(disciplina)" class="btn btn-danger" ><i class="fa-solid fa-trash"></i></button>
                         </div>
                     </td>
                 </tr>
@@ -45,12 +45,12 @@
         <!--botones paginas-->
         <div align="center">
             <button (click)="onPaginaAnterior()" class="btn btn-primary" style="margin: 10px"><i class="fa-solid fa-angle-left"></i></button>
-            <label>{{this.page+1}}/{{this.totalPages}}</label>
+            <label>{{this.page+1}}/{{this.totalPages}}</label><!--funcion para cambiar el numero dependiendo la paginacion -->
             <button (click)="onPaginaSiguiente()" class="btn btn-primary" style="margin: 10px"><i class="fa-solid fa-angle-right"></i></button>
         </div>
         <!--botones volver + nuevo registro-->
         <div align="right">
-            <button (click)="onNuevoFacultadClick()" style="margin: 10px" class="btn btn-success" ><i class="fa-solid fa-plus"></i></button>
+            <button (click)="onNuevoDisciplinaClick()" style="margin: 10px" class="btn btn-success" ><i class="fa-solid fa-plus"></i></button>
             <button (click)="onVolver()" class="btn btn-danger">Volver <i class="fa-solid fa-arrow-right-from-bracket"></i></button>
         </div>
     </div>

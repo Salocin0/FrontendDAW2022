@@ -6,6 +6,9 @@ import { DisciplinasService } from '../servicios/disciplinas.service';
 import { FacultadesService } from '../servicios/facultades.service';
 import { JugadorService } from '../servicios/jugador.service';
 import { NacionalidadesService } from '../servicios/nacionalidades.service';
+import { Disciplina } from '../dominio/disciplina';
+import { Facultad } from '../dominio/facultad';
+import { Nacionalidad } from '../dominio/nacionalidad';
 
 @Component({
   selector: 'app-jugadores',
@@ -13,6 +16,34 @@ import { NacionalidadesService } from '../servicios/nacionalidades.service';
   styleUrls: ['./jugadores.component.css']
 })
 export class JugadoresComponent implements OnInit {
+
+  iconNombre: boolean[] = [true,false,false];
+  iconFechaNacimiento: boolean[] = [true,false,false];
+  iconDNI: boolean[] = [true,false,false];
+  iconFacultad: boolean[] = [true,false,false];
+  iconDisciplina: boolean[] = [true,false,false];
+  iconNacionalidad: boolean[] = [true,false,false];
+  iconTelefono: boolean[] = [true,false,false];
+  iconLegajo: boolean[] = [true,false,false];
+  iconEmail: boolean[] = [true,false,false];
+
+  page=0;
+  size=5;
+  order="id"
+  asc=true;
+  primera=false;
+  ultima=false;
+  totalPages=0;
+
+  nacionalidades: any;
+  disciplinas: any[] = [];
+  facultades: any[] = [];
+  jugadores: Jugador[] = [];
+  filtrarJugadoresForm: FormGroup;
+
+  filtroDisciplina=""
+  filtroFacultad=""
+  filtroNacionalidad=""
 
   constructor(private  router: Router,private servicioNacionalidades: NacionalidadesService, private servicioDisciplinas: DisciplinasService, private servicioFacultades: FacultadesService, private servicioJugador: JugadorService, private formBuilder: FormBuilder) { 
       this.filtrarJugadoresForm = this.formBuilder.group({
@@ -22,42 +53,54 @@ export class JugadoresComponent implements OnInit {
         filtroNacionalidad: [""]
       })
   }
-
-  nacionalidades: any;
-  disciplinas: any[] = [];
-  facultades: any[] = [];
-  jugadores: Jugador[] = [];
-  filtrarJugadoresForm: FormGroup;
     
   ngOnInit(): void {
     this.servicioNacionalidades.getNacionalidades().subscribe((rta) => {this.nacionalidades = rta});
     this.servicioDisciplinas.getDisciplinas().subscribe((rta)=>{this.disciplinas=rta});
     this.servicioFacultades.getFacultades().subscribe((rta)=>{this.facultades=rta});
-    this.obtenerJugadores();
-  }
-
-  private obtenerJugadores(){
-    this.servicioJugador.getJugadores().subscribe(listaJugadores =>{
-      this.jugadores=listaJugadores;
-    })
+    this.obtenerJugadores("","","","");
   }
 
   onNuevoJugadorClick(){
-    this.router.navigate(['facultad-nuevo'])
+    this.router.navigate(['jugador-nuevo'])
   }
 
   editar(id: number){
     alert(id)
   }
+
   eliminar(id: number){
     alert("Eliminando a "+id)
   }
+
   onFiltrar(){
-    alert(this.filtrarJugadoresForm.controls["nombre"].value)
-    //this.jugador = this.servicioJugador.getJugadores()
+    const filtro=this.filtrarJugadoresForm.controls["filtro"].value
+    
+    if(this.filtrarJugadoresForm.controls["filtroDisciplina"].value!="Seleccionar"){
+      this.filtroDisciplina=this.filtrarJugadoresForm.controls["filtroDisciplina"].value
+    }
+
+    if(this.filtrarJugadoresForm.controls["filtroFacultad"].value.value!="Seleccionar"){
+      this.filtroFacultad=this.filtrarJugadoresForm.controls["filtroFacultad"].value
+    }
+    
+    if(this.filtrarJugadoresForm.controls["filtroNacionalidad"].value!="Seleccionar"){
+      this.filtroNacionalidad=this.filtrarJugadoresForm.controls["filtroNacionalidad"].value
+    }
+
+    this.obtenerJugadores(filtro,this.filtroDisciplina,this.filtroFacultad,this.filtroNacionalidad)
+  }
+
+  private obtenerJugadores(filtro:String,filtroDisciplina:String,filtroFacultad:String,filtroNacionalidad:String){
+    this.servicioJugador.getJugadoresPage(filtro,filtroDisciplina,filtroFacultad,filtroNacionalidad,this.page,this.size,this.order,this.asc).subscribe(listaJugadores =>{
+      this.jugadores=listaJugadores.content;
+      this.primera=listaJugadores.first;
+      this.ultima=listaJugadores.last;
+      this.totalPages=listaJugadores.totalPages;
+    })
   }
   onLimpiarFiltro() {
-    this.filtrarJugadoresForm.controls["nombre"].setValue('')
+    this.filtrarJugadoresForm.controls["filtro"].setValue('')
     this.onFiltrar()
   }
 
@@ -65,68 +108,460 @@ export class JugadoresComponent implements OnInit {
     this.router.navigate(['home'])
   }
 
+  onConsultar(jugador:Jugador){
+    this.router.navigate(['jugador-consultar',jugador])
+  }
+
+  onModificar(jugador:Jugador){
+    this.router.navigate(['jugador-actualizar',jugador])
+  }
+  onBorrar(jugador:Jugador){
+    this.servicioJugador.eliminarJugador(jugador).subscribe(jugador =>{console.log(jugador);})
+    this.onFiltrar();
+  }
+
+  sort(asc:boolean,order:string){
+    this.asc=asc
+    this.order=order
+  }
+   //avanzar pagina
+   onPaginaSiguiente(){
+    if(!this.ultima){
+      this.page=this.page+1
+      this.onFiltrar()
+    }
+  }
+  //retroceder pagina
+  onPaginaAnterior(){
+    if(!this.primera){
+      this.page=this.page-1
+      this.onFiltrar()
+    }
+  } 
+
   onOrdenarXNombre(){
-    //ordenar de A a Z si es la primera vez q se aplica
-    //ordenar de Z a A si es la segunda vez q se aplica
-    //quita el orden por nombre si es la tercera ves
+    if(this.iconNombre[0]===true){
+      this.iconNombre=[false,true,false]
+      //acendente por nombre
+      this.sort(true,"nombre")
+      this.iconFechaNacimiento = [true,false,false];
+      this.iconDNI = [true,false,false];
+      this.iconFacultad = [true,false,false];
+      this.iconDisciplina = [true,false,false];
+      this.iconNacionalidad = [true,false,false];
+      this.iconTelefono = [true,false,false];
+      this.iconLegajo = [true,false,false];
+      this.iconEmail = [true,false,false];
+      this.onFiltrar()
+      return
+    }
+    if(this.iconNombre[2]===true){
+      this.iconNombre=[true,false,false]
+      //sin orden por nombre (volver a id)
+      this.sort(true,"id")
+      this.iconFechaNacimiento = [true,false,false];
+      this.iconDNI = [true,false,false];
+      this.iconFacultad = [true,false,false];
+      this.iconDisciplina = [true,false,false];
+      this.iconNacionalidad = [true,false,false];
+      this.iconTelefono = [true,false,false];
+      this.iconLegajo = [true,false,false];
+      this.iconEmail = [true,false,false];
+      this.onFiltrar()
+      return
+    }
+    if(this.iconNombre[1]===true){
+      this.iconNombre=[false,false,true]
+      //descendente por nombre
+      this.sort(false,"nombre")
+      this.iconFechaNacimiento = [true,false,false];
+      this.iconDNI = [true,false,false];
+      this.iconFacultad = [true,false,false];
+      this.iconDisciplina = [true,false,false];
+      this.iconNacionalidad = [true,false,false];
+      this.iconTelefono = [true,false,false];
+      this.iconLegajo = [true,false,false];
+      this.iconEmail = [true,false,false];
+      this.onFiltrar()
+      return
+    }
   }
 
   onOrdenarXFechaNacimiento(){
-    //ordenar de fecha mas cercana a fecha mas lejana si es la primera vez q se aplica
-    //ordenar de fecha mas lejana a fecha mas cercana si es la segunda vez q se aplica
-    //quita el orden por fecha de nacimiento si es la tercera ves
+    if(this.iconFechaNacimiento[0]===true){
+      this.iconFechaNacimiento=[false,true,false]
+      //acendente por nombre
+      this.sort(true,"fechaNacimiento")
+      this.iconNombre = [true,false,false];
+      this.iconDNI = [true,false,false];
+      this.iconFacultad = [true,false,false];
+      this.iconDisciplina = [true,false,false];
+      this.iconNacionalidad = [true,false,false];
+      this.iconTelefono = [true,false,false];
+      this.iconLegajo = [true,false,false];
+      this.iconEmail = [true,false,false];
+      this.onFiltrar()
+      return
+    }
+    if(this.iconFechaNacimiento[2]===true){
+      this.iconFechaNacimiento=[true,false,false]
+      //sin orden por nombre (volver a id)
+      this.sort(true,"id")
+      this.iconNombre = [true,false,false];
+      this.iconDNI = [true,false,false];
+      this.iconFacultad = [true,false,false];
+      this.iconDisciplina = [true,false,false];
+      this.iconNacionalidad = [true,false,false];
+      this.iconTelefono = [true,false,false];
+      this.iconLegajo = [true,false,false];
+      this.iconEmail = [true,false,false];
+      this.onFiltrar()
+      return
+    }
+    if(this.iconFechaNacimiento[1]===true){
+      this.iconFechaNacimiento=[false,false,true]
+      //descendente por nombre
+      this.sort(false,"fechaNacimiento")
+      this.iconNombre = [true,false,false];
+      this.iconDNI = [true,false,false];
+      this.iconFacultad = [true,false,false];
+      this.iconDisciplina = [true,false,false];
+      this.iconNacionalidad = [true,false,false];
+      this.iconTelefono = [true,false,false];
+      this.iconLegajo = [true,false,false];
+      this.iconEmail = [true,false,false];
+      this.onFiltrar()
+      return
+    }
   }
-
   onOrdenarXDNI(){
-    //ordenar de 1 a infinito si es la primera vez q se aplica
-    //ordenar de infinito a 1 si es la segunda vez q se aplica
-    //quita el orden por DNI si es la tercera ves
+    if(this.iconDNI[0]===true){
+      this.iconDNI=[false,true,false]
+      //acendente por nombre
+      this.sort(true,"dni")
+      this.iconNombre = [true,false,false];
+      this.iconFechaNacimiento = [true,false,false];
+      this.iconFacultad = [true,false,false];
+      this.iconDisciplina = [true,false,false];
+      this.iconNacionalidad = [true,false,false];
+      this.iconTelefono = [true,false,false];
+      this.iconLegajo = [true,false,false];
+      this.iconEmail = [true,false,false];
+      this.onFiltrar()
+      return
+    }
+    if(this.iconDNI[2]===true){
+      this.iconDNI=[true,false,false]
+      //sin orden por nombre (volver a id)
+      this.sort(true,"id")
+      this.iconNombre = [true,false,false];
+      this.iconFechaNacimiento = [true,false,false];
+      this.iconFacultad = [true,false,false];
+      this.iconDisciplina = [true,false,false];
+      this.iconNacionalidad = [true,false,false];
+      this.iconTelefono = [true,false,false];
+      this.iconLegajo = [true,false,false];
+      this.iconEmail = [true,false,false];
+      this.onFiltrar()
+      return
+    }
+    if(this.iconDNI[1]===true){
+      this.iconDNI=[false,false,true]
+      //descendente por nombre
+      this.sort(false,"dni")
+      this.iconNombre = [true,false,false];
+      this.iconFechaNacimiento = [true,false,false];
+      this.iconFacultad = [true,false,false];
+      this.iconDisciplina = [true,false,false];
+      this.iconNacionalidad = [true,false,false];
+      this.iconTelefono = [true,false,false];
+      this.iconLegajo = [true,false,false];
+      this.iconEmail = [true,false,false];
+      this.onFiltrar()
+      return
+    }
   }
-
   onOrdenarXFacultad(){
-    //ordenar de A a Z si es la primera vez q se aplica
-    //ordenar de Z a A si es la segunda vez q se aplica
-    //quita el orden por facultad si es la tercera ves
+    if(this.iconFacultad[0]===true){
+      this.iconFacultad=[false,true,false]
+      //acendente por nombre
+      this.sort(true,"facultad")
+      this.iconNombre = [true,false,false];
+      this.iconFechaNacimiento = [true,false,false];
+      this.iconDNI = [true,false,false];
+      this.iconDisciplina = [true,false,false];
+      this.iconNacionalidad = [true,false,false];
+      this.iconTelefono = [true,false,false];
+      this.iconLegajo = [true,false,false];
+      this.iconEmail = [true,false,false];
+      this.onFiltrar()
+      return
+    }
+    if(this.iconFacultad[2]===true){
+      this.iconFacultad=[true,false,false]
+      //sin orden por nombre (volver a id)
+      this.sort(true,"id")
+      this.iconNombre = [true,false,false];
+      this.iconFechaNacimiento = [true,false,false];
+      this.iconDNI = [true,false,false];
+      this.iconDisciplina = [true,false,false];
+      this.iconNacionalidad = [true,false,false];
+      this.iconTelefono = [true,false,false];
+      this.iconLegajo = [true,false,false];
+      this.iconEmail = [true,false,false];
+      this.onFiltrar()
+      return
+    }
+    if(this.iconFacultad[1]===true){
+      this.iconFacultad=[false,false,true]
+      //descendente por nombre
+      this.sort(false,"facultad")
+      this.iconNombre = [true,false,false];
+      this.iconFechaNacimiento = [true,false,false];
+      this.iconDNI = [true,false,false];
+      this.iconDisciplina = [true,false,false];
+      this.iconNacionalidad = [true,false,false];
+      this.iconTelefono = [true,false,false];
+      this.iconLegajo = [true,false,false];
+      this.iconEmail = [true,false,false];
+      this.onFiltrar()
+      return
+    }
   }
-
   onOrdenarXDisciplina(){
-    //ordenar de A a Z si es la primera vez q se aplica
-    //ordenar de Z a A si es la segunda vez q se aplica
-    //quita el orden por diciplina si es la tercera ves
+    if(this.iconDisciplina[0]===true){
+      this.iconDisciplina=[false,true,false]
+      //acendente por nombre
+      this.sort(true,"disciplina")
+      this.iconNombre = [true,false,false];
+      this.iconFechaNacimiento = [true,false,false];
+      this.iconDNI = [true,false,false];
+      this.iconFacultad = [true,false,false];
+      this.iconNacionalidad = [true,false,false];
+      this.iconTelefono = [true,false,false];
+      this.iconLegajo = [true,false,false];
+      this.iconEmail = [true,false,false];
+      this.onFiltrar()
+      return
+    }
+    if(this.iconDisciplina[2]===true){
+      this.iconDisciplina=[true,false,false]
+      //sin orden por nombre (volver a id)
+      this.sort(true,"id")
+      this.iconNombre = [true,false,false];
+      this.iconFechaNacimiento = [true,false,false];
+      this.iconDNI = [true,false,false];
+      this.iconFacultad = [true,false,false];
+      this.iconNacionalidad = [true,false,false];
+      this.iconTelefono = [true,false,false];
+      this.iconLegajo = [true,false,false];
+      this.iconEmail = [true,false,false];
+      this.onFiltrar()
+      return
+    }
+    if(this.iconDisciplina[1]===true){
+      this.iconDisciplina=[false,false,true]
+      //descendente por nombre
+      this.sort(false,"disciplina")
+      this.iconNombre = [true,false,false];
+      this.iconFechaNacimiento = [true,false,false];
+      this.iconDNI = [true,false,false];
+      this.iconFacultad = [true,false,false];
+      this.iconNacionalidad = [true,false,false];
+      this.iconTelefono = [true,false,false];
+      this.iconLegajo = [true,false,false];
+      this.iconEmail = [true,false,false];
+      this.onFiltrar()
+      return
+    }
   }
-
   onOrdenarXNacionalidad(){
-    //ordenar de A a Z si es la primera vez q se aplica
-    //ordenar de Z a A si es la segunda vez q se aplica
-    //quita el orden por nacionalidad si es la tercera ves
-  }
-  
-  onPaginaSiguiente(){
-    //setea la pagina actual + 1, si la pagina actual no es la ultima
-    //muestra la pagina actual
-  }
-  onPaginaAnterior(){
-    //setea la pagina actual - 1, si la pagina actual no es la primera 
-    //muestra la pagina actual
-  }
-  onModificar(){
-    //setea la pagina actual - 1, si la pagina actual no es la primera 
-    //muestra la pagina actual
-  }
-  onBorrar(){
-    //setea la pagina actual - 1, si la pagina actual no es la primera 
-    //muestra la pagina actual
-  }
-  onOrdenarXEMail(){
-    //setea la pagina actual - 1, si la pagina actual no es la primera 
-    //muestra la pagina actual
-  }
-  onOrdenarXLegajo(){
-    //setea la pagina actual - 1, si la pagina actual no es la primera 
-    //muestra la pagina actual
+    if(this.iconNacionalidad[0]===true){
+      this.iconNacionalidad=[false,true,false]
+      //acendente por nombre
+      this.sort(true,"nacionalidad")
+      this.iconNombre = [true,false,false];
+      this.iconFechaNacimiento = [true,false,false];
+      this.iconDNI = [true,false,false];
+      this.iconFacultad = [true,false,false];
+      this.iconDisciplina = [true,false,false];
+      this.iconTelefono = [true,false,false];
+      this.iconLegajo = [true,false,false];
+      this.iconEmail = [true,false,false];
+      this.onFiltrar()
+      return
+    }
+    if(this.iconNacionalidad[2]===true){
+      this.iconNacionalidad=[true,false,false]
+      //sin orden por nombre (volver a id)
+      this.sort(true,"id")
+      this.iconNombre = [true,false,false];
+      this.iconFechaNacimiento = [true,false,false];
+      this.iconDNI = [true,false,false];
+      this.iconFacultad = [true,false,false];
+      this.iconDisciplina = [true,false,false];
+      this.iconTelefono = [true,false,false];
+      this.iconLegajo = [true,false,false];
+      this.iconEmail = [true,false,false];
+      this.onFiltrar()
+      return
+    }
+    if(this.iconNacionalidad[1]===true){
+      this.iconNacionalidad=[false,false,true]
+      //descendente por nombre
+      this.sort(false,"nacionalidad")
+      this.iconNombre = [true,false,false];
+      this.iconFechaNacimiento = [true,false,false];
+      this.iconDNI = [true,false,false];
+      this.iconFacultad = [true,false,false];
+      this.iconDisciplina = [true,false,false];
+      this.iconTelefono = [true,false,false];
+      this.iconLegajo = [true,false,false];
+      this.iconEmail = [true,false,false];
+      this.onFiltrar()
+      return
+    }
   }
   onOrdenarXTelefono(){
-    //setea la pagina actual - 1, si la pagina actual no es la primera 
-    //muestra la pagina actual
+    if(this.iconTelefono[0]===true){
+      this.iconTelefono=[false,true,false]
+      //acendente por nombre
+      this.sort(true,"telefono")
+      this.iconNombre = [true,false,false];
+      this.iconFechaNacimiento = [true,false,false];
+      this.iconDNI = [true,false,false];
+      this.iconFacultad = [true,false,false];
+      this.iconDisciplina = [true,false,false];
+      this.iconNacionalidad = [true,false,false];
+      this.iconLegajo = [true,false,false];
+      this.iconEmail = [true,false,false];
+      this.onFiltrar()
+      return
+    }
+    if(this.iconTelefono[2]===true){
+      this.iconTelefono=[true,false,false]
+      //sin orden por nombre (volver a id)
+      this.sort(true,"id")
+      this.iconNombre = [true,false,false];
+      this.iconFechaNacimiento = [true,false,false];
+      this.iconDNI = [true,false,false];
+      this.iconFacultad = [true,false,false];
+      this.iconDisciplina = [true,false,false];
+      this.iconNacionalidad = [true,false,false];
+      this.iconLegajo = [true,false,false];
+      this.iconEmail = [true,false,false];
+      this.onFiltrar()
+      return
+    }
+    if(this.iconTelefono[1]===true){
+      this.iconTelefono=[false,false,true]
+      //descendente por nombre
+      this.sort(false,"telefono")
+      this.iconNombre = [true,false,false];
+      this.iconFechaNacimiento = [true,false,false];
+      this.iconDNI = [true,false,false];
+      this.iconFacultad = [true,false,false];
+      this.iconDisciplina = [true,false,false];
+      this.iconNacionalidad = [true,false,false];
+      this.iconLegajo = [true,false,false];
+      this.iconEmail = [true,false,false];
+      this.onFiltrar()
+      return
+    }
+  }
+
+  onOrdenarXLegajo(){
+    if(this.iconLegajo[0]===true){
+      this.iconLegajo=[false,true,false]
+      //acendente por nombre
+      this.sort(true,"legajo")
+      this.iconNombre = [true,false,false];
+      this.iconFechaNacimiento = [true,false,false];
+      this.iconDNI = [true,false,false];
+      this.iconFacultad = [true,false,false];
+      this.iconDisciplina = [true,false,false];
+      this.iconNacionalidad = [true,false,false];
+      this.iconTelefono = [true,false,false];
+      this.iconEmail = [true,false,false];
+      this.onFiltrar()
+      return
+    }
+    if(this.iconLegajo[2]===true){
+      this.iconLegajo=[true,false,false]
+      //sin orden por nombre (volver a id)
+      this.sort(true,"id")
+      this.iconNombre = [true,false,false];
+      this.iconFechaNacimiento = [true,false,false];
+      this.iconDNI = [true,false,false];
+      this.iconFacultad = [true,false,false];
+      this.iconDisciplina = [true,false,false];
+      this.iconNacionalidad = [true,false,false];
+      this.iconTelefono = [true,false,false];
+      this.iconEmail = [true,false,false];
+      this.onFiltrar()
+      return
+    }
+    if(this.iconLegajo[1]===true){
+      this.iconLegajo=[false,false,true]
+      //descendente por nombre
+      this.sort(false,"legajo")
+      this.iconNombre = [true,false,false];
+      this.iconFechaNacimiento = [true,false,false];
+      this.iconDNI = [true,false,false];
+      this.iconFacultad = [true,false,false];
+      this.iconDisciplina = [true,false,false];
+      this.iconNacionalidad = [true,false,false];
+      this.iconTelefono = [true,false,false];
+      this.iconEmail = [true,false,false];
+      this.onFiltrar()
+      return
+    }
+  }
+  onOrdenarXEMail(){
+    if(this.iconEmail[0]===true){
+      this.iconEmail=[false,true,false]
+      //acendente por nombre
+      this.sort(true,"email")
+      this.iconNombre = [true,false,false];
+      this.iconFechaNacimiento = [true,false,false];
+      this.iconDNI = [true,false,false];
+      this.iconFacultad = [true,false,false];
+      this.iconDisciplina = [true,false,false];
+      this.iconNacionalidad = [true,false,false];
+      this.iconTelefono = [true,false,false];
+      this.iconLegajo = [true,false,false];
+      this.onFiltrar()
+      return
+    }
+    if(this.iconEmail[2]===true){
+      this.iconEmail=[true,false,false]
+      //sin orden por nombre (volver a id)
+      this.sort(true,"id")
+      this.iconNombre = [true,false,false];
+      this.iconFechaNacimiento = [true,false,false];
+      this.iconDNI = [true,false,false];
+      this.iconFacultad = [true,false,false];
+      this.iconDisciplina = [true,false,false];
+      this.iconNacionalidad = [true,false,false];
+      this.iconTelefono = [true,false,false];
+      this.iconLegajo = [true,false,false];
+      this.onFiltrar()
+      return
+    }
+    if(this.iconEmail[1]===true){
+      this.iconEmail=[false,false,true]
+      //descendente por nombre
+      this.sort(false,"email")
+      this.iconNombre = [true,false,false];
+      this.iconFechaNacimiento = [true,false,false];
+      this.iconDNI = [true,false,false];
+      this.iconFacultad = [true,false,false];
+      this.iconDisciplina = [true,false,false];
+      this.iconNacionalidad = [true,false,false];
+      this.iconTelefono = [true,false,false];
+      this.iconLegajo = [true,false,false];
+      this.onFiltrar()
+      return
+    }
   }
 }

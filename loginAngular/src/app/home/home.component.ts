@@ -22,6 +22,7 @@ export class HomeComponent implements OnInit {
   }
   //ir a listado disciplinas
   onDisciplinasClick(){
+    this.router.navigate(['disciplinas'])
   }
   //ir a listado facultades
   onFacultadesClick(){
@@ -29,6 +30,8 @@ export class HomeComponent implements OnInit {
   }
   //ir a nueva disciplina
   onNuevaDisciplinaClick(){
+    this.router.navigate(['disciplina-nuevo'])
+
   }
   //ir a nueva facultad
   onNuevaFacultadClick(){

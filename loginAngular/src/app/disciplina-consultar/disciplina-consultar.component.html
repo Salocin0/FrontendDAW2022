@@ -1,0 +1,34 @@
+<form [formGroup]="consultarForm">
+    <div class="mx-auto" style="width: 50% ;">
+        <fieldset>
+            <!--titulo-->
+            <legend align="center">Disciplina</legend>
+            <div>
+                <!--label + text id-->
+                <div class="mb-3">
+                    <label for="">Id</label>
+                    <input type="text" class="form-control" formControlName="Id" readonly="readonly">
+                </div>
+                <!--label + text nombre-->
+                <div class="mb-3">
+                    <label for="" >Nombre</label>
+                    <input type="text" class="form-control" formControlName="Nombre" readonly="readonly">
+                </div>
+                <!--label + text codigo-->
+                <div class="mb-3">
+                    <label for="">Codigo</label>
+                    <input type="text" class="form-control" formControlName="Codigo" readonly="readonly">
+                </div>
+                <!--label + text codigo numerico-->
+                <div class="mb-3">
+                    <label for="">Descripcion</label>
+                    <input type="text" class="form-control" formControlName="Descripcion" readonly="readonly">
+                </div>
+                <!--boton-->
+                <div align="right">
+                    <button (click)="onVolver()" type="submit" class="btn btn-danger"><i class="fa-solid fa-arrow-right-from-bracket"></i> Volver</button>
+                </div>
+            </div> 
+        </fieldset>
+    </div>
+</form>

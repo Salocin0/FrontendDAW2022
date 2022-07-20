@@ -10,6 +10,11 @@ export class DisciplinasService {
   private URLBase = "http://localhost:8080/disciplinas";
   constructor(private httpClient:HttpClient) { }
 
+  //traer facultades filtro + paginacion
+  public getDisciplinasPage(nombre:string,codigo:string,descripcion:string, page: number, size:number, order:String, asc:boolean):Observable<any> {
+    return this.httpClient.get<any>(`${this.URLBase}`+`/disciplinasPage?`+`page=${page}&size=${size}&order=${order}&asc=${asc}&nombre=${nombre}&codigo=${codigo}&descripcion=${descripcion}`);
+  }
+
   guardarDisciplinas(disciplina:Disciplina):Observable<Disciplina>{
     return this.httpClient.post<Disciplina>(`${this.URLBase}`,disciplina)
   }
@@ -30,10 +35,4 @@ export class DisciplinasService {
     return this.httpClient.get<Disciplina[]>(`${this.URLBase}`);
   }
 
-    
 }
-/*
-  {codigo:'FUT',nombre:'Futbol'},
-  {codigo:'VOL',nombre:'Voley'},
-  {codigo:'BASK',nombre:'Basket'}
-*/

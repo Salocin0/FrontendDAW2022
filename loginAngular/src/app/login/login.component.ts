@@ -36,4 +36,8 @@ export class LoginComponent implements OnInit {
       })
     }
   }
+
+  onNuevoUsuario(){
+    this.router.navigate(['usuario-nuevo'])
+  }
 }
