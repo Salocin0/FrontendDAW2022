@@ -1,21 +1,23 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup } from '@angular/forms';
 import { Router } from '@angular/router';
+import Swal from 'sweetalert2';
 import { Facultad } from '../dominio/facultad';
 import { FacultadesService } from '../servicios/facultades.service';
-
 @Component({
   selector: 'app-facultades',
   templateUrl: './facultades.component.html',
   styleUrls: ['./facultades.component.css']
 })
 export class FacultadesComponent implements OnInit {
-  //atributos
+  //atributos iconos tabla
   iconNombre: boolean[] = [true,false,false];
   iconCodigo: boolean[] = [true,false,false];
   iconCodigoNumerico: boolean[] = [true,false,false];
+  //atributos facultades
   facultades: any[] = [];
   FacultadesForm: FormGroup;
+  //atributos paginacion
   page=0;
   size=5;
   order="id"
@@ -26,18 +28,16 @@ export class FacultadesComponent implements OnInit {
   //constructor
   constructor(private router: Router, private servicioFacultades: FacultadesService, private formBuilder: FormBuilder) { 
     this.FacultadesForm = this.formBuilder.group({
-      nombre:[""],
-      codigo:[""],
-      codigoNumerico:[""],
+      filtro:[""],
     })
   }
   //metodos al iniciar
   ngOnInit(): void {
-    this.obtenerFacultades("","","");
+    this.obtenerFacultades("");
   }
   //traer la facultades paginadas con los filtros
-  private obtenerFacultades(nombre:string,codigo:string,codigoNumerico:string){
-    this.servicioFacultades.getFacultadesPage(nombre,codigo,codigoNumerico,this.page,this.size,this.order,this.asc).subscribe(listaFacultades =>{
+  private obtenerFacultades(filtro:string){
+    this.servicioFacultades.getFacultadesPage(filtro,this.page,this.size,this.order,this.asc).subscribe(listaFacultades =>{
       this.facultades=listaFacultades.content;
       this.primera=listaFacultades.first;
       this.ultima=listaFacultades.last;
@@ -48,22 +48,14 @@ export class FacultadesComponent implements OnInit {
   onNuevoFacultadClick(){
     this.router.navigate(['facultad-nuevo'])
   }
-  //alerta eliminar facultad
-  eliminar(id: number){
-    alert("Eliminando a "+id)
-  }
   //traer facultades con filtro
   onFiltrar(){
-    const nombre=this.FacultadesForm.controls["nombre"].value
-    const codigo=this.FacultadesForm.controls["codigo"].value
-    const codigoNumerico=this.FacultadesForm.controls["codigoNumerico"].value
-    this.obtenerFacultades(nombre,codigo,codigoNumerico)
+    const filtro = this.FacultadesForm.controls["filtro"].value
+    this.obtenerFacultades(filtro)
   }
   //limpiar filtro
   onLimpiarFiltro() {
-    this.FacultadesForm.controls["nombre"].setValue('')
-    this.FacultadesForm.controls["codigo"].setValue('')
-    this.FacultadesForm.controls["codigoNumerico"].setValue('')
+    this.FacultadesForm.controls["filtro"].setValue('')
     this.onFiltrar()
   }
   //volver al menu principal
@@ -74,10 +66,20 @@ export class FacultadesComponent implements OnInit {
   onModificar(facultad:Facultad){
     this.router.navigate(['facultad-actualizar',facultad])
   }
-  //borrar facultad
+  //aviso, en caso de aceptar se borra la facultad, en caso contrario se cancela 
   onBorrar(facultad:Facultad){
-    this.servicioFacultades.eliminarFacultad(facultad).subscribe(facultad =>{console.log(facultad);})
-    this.onFiltrar();
+    Swal.fire({
+      title: 'Borrar',
+      text: "Desea eliminar facultad " +facultad.nombre+"?!",
+      icon: 'warning',
+      showCancelButton: true,
+      confirmButtonText: 'Si!'
+    }as any).then((result)=>{
+      if(result.isConfirmed){
+        this.servicioFacultades.eliminarFacultad(facultad).subscribe(facultad =>{console.log(facultad);})
+        this.onFiltrar();
+      }
+    })
   }
   //ir a consultar facultad
   onConsultar(facultad:Facultad){

@@ -6,24 +6,26 @@ import { DisciplinasService } from '../servicios/disciplinas.service';
 import { FacultadesService } from '../servicios/facultades.service';
 import { JugadorService } from '../servicios/jugador.service';
 import { NacionalidadesService } from '../servicios/nacionalidades.service';
-
 @Component({
   selector: 'app-jugador-actualizar',
   templateUrl: './jugador-actualizar.component.html',
   styleUrls: ['./jugador-actualizar.component.css']
 })
 export class JugadorActualizarComponent implements OnInit {
-  
+  //atributos
   jugadorNuevo:any
   fechaNacimientosinformato:Date | undefined
-  
   facultadSel = {id:0,nombre:"",codigo:"",codigoNumerico:""}
   disciplinaSel = {id:0,nombre:"",codigo:"",descripcion:""}
-
   nacionalidades: any
   disciplinas: any[]=[]
   facultades: any[]=[]
-  
+  enviado = false
+  opcionSeleccionado: any;
+  verSelecciondis: any;
+  verSeleccionfac: any;
+  verSeleccionnac: any;
+  id: number=0;
   actualizarForm = this.builder.group({
     Nombre:["", [Validators.required, Validators.minLength(2)]],
     Apellido:["", [Validators.required, Validators.minLength(2)]],
@@ -36,18 +38,10 @@ export class JugadorActualizarComponent implements OnInit {
     Facultad: ["", ], 
     Disciplina: ["", ] 
   })
-
-  enviado = false
-  opcionSeleccionado: any;
-  verSelecciondis: any;
-  verSeleccionfac: any;
-  verSeleccionnac: any;
-
-  id: number=0;
-
+  //constructor
   constructor(private builder: FormBuilder, private router:Router, private servicioNacionalidades:NacionalidadesService, private servicioDisciplinas:DisciplinasService,  private servicioJugador: JugadorService, private servicioFacultades: FacultadesService, private Aroute:ActivatedRoute) {
   }
-
+  //cargar combos + datos jugador a actualizar
   ngOnInit(): void {
     // cargar nacionalidades
     this.servicioNacionalidades.getNacionalidades().subscribe((rta) => {this.nacionalidades = rta});
@@ -55,7 +49,7 @@ export class JugadorActualizarComponent implements OnInit {
     this.servicioDisciplinas.getDisciplinas().subscribe((rta)=>{this.disciplinas=rta});
     //cargar facultades
     this.servicioFacultades.getFacultades().subscribe((rta) => {this.facultades=rta});
-    
+    //cargar datos de jugador a actualizar
     this.id=this.Aroute.snapshot.params['id']
     this.actualizarForm.controls['Nombre'].setValue(this.Aroute.snapshot.params['nombre']);
     this.actualizarForm.controls['Apellido'].setValue(this.Aroute.snapshot.params['apellido']);
@@ -64,9 +58,8 @@ export class JugadorActualizarComponent implements OnInit {
     this.actualizarForm.controls['Legajo'].setValue(this.Aroute.snapshot.params['legajo']);
     this.actualizarForm.controls['Email'].setValue(this.Aroute.snapshot.params['email']);
     this.actualizarForm.controls['FechaDeNacimiento'].setValue(this.Aroute.snapshot.params['fechaFormat2']);
-    //this.actualizarForm.controls['Facultad'].setValue(this.Aroute.snapshot.params['facultadNombre']) 
   }
-
+  //guardar facultad seleccionadad en variable
   onclickFacultad(){
     this.verSeleccionfac = this.actualizarForm.controls["Facultad"].value;
     for(let i = 0 ; i < this.facultades.length ; i++){
@@ -78,7 +71,7 @@ export class JugadorActualizarComponent implements OnInit {
       }
     }
   }
-
+  //guardar disciplina seleccionadad en variable
   onclickDisciplina(){
     this.verSelecciondis = this.actualizarForm.controls["Disciplina"].value;
     for(let i = 0 ; i < this.disciplinas.length ; i++){
@@ -90,14 +83,14 @@ export class JugadorActualizarComponent implements OnInit {
       }
     }
   }
-  
+   //guardar nacionalidad seleccionadad en variable
   onclickNacionalidad(){
     this.verSeleccionnac = this.actualizarForm.controls["Nacionalidad"].value
   }
-
+  //actualizar jugador
   onSubmit() {
     this.enviado = true
-    
+    //comprobar inputs
     if(this.actualizarForm.controls['Nombre'].errors) return
     if(this.actualizarForm.controls['Apellido'].errors) return
     if(this.actualizarForm.controls['Email'].errors) return
@@ -108,8 +101,9 @@ export class JugadorActualizarComponent implements OnInit {
     if(this.actualizarForm.controls['Facultad'].errors) return
     if(this.actualizarForm.controls['Disciplina'].errors) return
     if(this.actualizarForm.controls['Nacionalidad'].errors) return
-
+    //crear jugador con nuevos datos
     const jugador = {
+      id:this.id,
       nombre: this.actualizarForm.controls["Nombre"].value,
       apellido: this.actualizarForm.controls["Apellido"].value,
       dni: this.actualizarForm.controls["Dni"].value,
@@ -121,18 +115,19 @@ export class JugadorActualizarComponent implements OnInit {
       facultad: this.facultadSel,
       disciplina: this.disciplinaSel
     }
+    //actualizar jugador
     this.jugadorNuevo = jugador;
     this.servicioJugador.actualizarJugador(this.jugadorNuevo).subscribe()
     console.log(this.jugadorNuevo);
-
+    //aviso de actualizacion
     Swal.fire({
       title: 'Jugador Actualizado'
     })
+    //volver
     this.onVolver()
   }
-
+  //ir a listado de jugadores
   onVolver(){
     this.router.navigate(['jugadores'])
   }
-
-}  
+}

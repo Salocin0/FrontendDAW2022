@@ -1,37 +1,46 @@
 <form [formGroup]="actualizarForm" (ngSubmit)="onSubmit()">
     <div class="mx-auto" style="width: 50% ;">
       <fieldset>
+        <!--titulo-->
         <legend align="center">Datos Jugador</legend>
           <div>
+            <!--label + text nombre-->
             <div class="mb-3">
               <label for="">Nombre</label>
               <input id="nombre" type="text" placeholder="Ingrese el nombre" class="form-control" formControlName="Nombre" [ngClass]="{'is-invalid': enviado===true && actualizarForm.controls['Nombre'].errors}">
             </div>
+            <!--label + text apellido-->
             <div class="mb-3">
               <label for="">Apellido</label>
               <input id="apellido" type="text" placeholder="Ingrese el apellido" class="form-control" formControlName="Apellido" [ngClass]="{'is-invalid': enviado===true && actualizarForm.controls['Apellido'].errors}">
             </div>
+            <!--label + text dni-->
             <div class="mb-3">
               <label for="">DNI</label>
               <input id="dni" type="number" placeholder="Ingrese número de DNI" class="form-control" formControlName="Dni" [ngClass]="{'is-invalid': enviado===true && actualizarForm.controls['Dni'].errors}">
             </div>
+            <!--label + text telefono-->
             <div class="mb-3">
               <label for="">Telefono</label>
               <input id="telefono" type="text" placeholder="Ingrese número de telefóno" class="form-control" formControlName="Telefono">
             </div>
+            <!--label + text legajo-->
             <div class="mb-3">
               <label for="">Legajo</label>
               <input id="legajo" type="number" placeholder="Ingrese número de legajo" class="form-control" formControlName="Legajo" [ngClass]="{'is-invalid': enviado===true && actualizarForm.controls['Legajo'].errors}">
             </div>
+            <!--label + text email-->
             <div class="mb-3">
               <label for="">E-Mail</label>
               <input id="email" type="text" placeholder="Ingrese el email" class="form-control" formControlName="Email" [ngClass]="{'is-invalid': enviado===true && actualizarForm.controls['Email'].errors}">
             </div>
+            <!--label + text fecha nacimiento-->
             <div class="mb-3">
               <label for="">Fecha Nacimiento</label>
               <input id="fecha-nacimiento" type="date" class="form-control" formControlName="FechaDeNacimiento">
             </div>
           </div>
+          <!--combo facultad-->
           <div class="mb-3">
             <legend>Facultad</legend><br>
             <select name="facultades" formControlName="Facultad" class="form-control" id=""  (change)="onclickFacultad()">
@@ -41,6 +50,7 @@
               </option>
             </select>
           </div>
+          <!--combo disciplina-->
           <div class="mb-3">
             <legend>Disciplina</legend><br>
             <select name="disciplinas" formControlName="Disciplina" class="form-control" id="" (change)="onclickDisciplina()">
@@ -50,6 +60,7 @@
               </option>
             </select>
           </div>
+          <!--combo nacionalidad-->
           <div class="mb-3">
             <legend>Nacionalidad</legend><br>
             <select name="nacionalidades" formControlName="Nacionalidad" class="form-control" id="" (change)="onclickNacionalidad()">
@@ -59,6 +70,7 @@
               </option>
             </select>
           </div>
+          <!--botones-->
           <div>
             <button type="submit" class="btn btn-primary" (click)="onSubmit()"><i class="fa-solid fa-angle-down"></i> Actualizar</button>
             <button style="margin: 10px" (click)="onVolver()" type="submit" class="btn btn-danger"><i class="fa-solid fa-arrow-right-from-bracket"></i> Volver</button>
@@ -66,4 +78,3 @@
       </fieldset>
     </div>
   </form>
-  

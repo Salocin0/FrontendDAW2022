@@ -2,7 +2,6 @@ import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs/internal/Observable';
 import { Facultad } from '../dominio/facultad';
-
 @Injectable({
   providedIn: 'root'
 })
@@ -12,8 +11,8 @@ export class FacultadesService {
   //constructor
   constructor(private httpClient:HttpClient) { }
   //traer facultades filtro + paginacion
-  public getFacultadesPage(nombre:string,codigo:string,codigoNumerico:string, page: number, size:number, order:String, asc:boolean):Observable<any> {
-    return this.httpClient.get<any>(`${this.URLBase}`+`/facultadesPage?`+`page=${page}&size=${size}&order=${order}&asc=${asc}&nombre=${nombre}&codigo=${codigo}&codigoNumerico=${codigoNumerico}`);
+  public getFacultadesPage(filtro:String, page: number, size:number, order:String, asc:boolean):Observable<any> {
+    return this.httpClient.get<any>(`${this.URLBase}`+`/facultadesPage?`+`page=${page}&size=${size}&order=${order}&asc=${asc}&filtro=${filtro}`);
   }
   //guardar facultad
   guardarFacultad(facultad:Facultad):Observable<Facultad>{

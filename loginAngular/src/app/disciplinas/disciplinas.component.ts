@@ -1,21 +1,23 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup } from '@angular/forms';
 import { Router } from '@angular/router';
+import Swal from 'sweetalert2';
 import { Disciplina } from '../dominio/disciplina';
 import { DisciplinasService } from '../servicios/disciplinas.service';
-
 @Component({
   selector: 'app-disciplinas',
   templateUrl: './disciplinas.component.html',
   styleUrls: ['./disciplinas.component.css']
 })
 export class DisciplinasComponent implements OnInit {
-  //atributos
+  //atributos icono tabla
   iconNombre: boolean[] = [true,false,false];
   iconCodigo: boolean[] = [true,false,false];
   iconDescripcion: boolean[] = [true,false,false];
+  //atributos disciplinas
   disciplinas: any[] = [];
   DisciplinasForm: FormGroup;
+  //atributos paginacion
   page=0;
   size=5;
   order="id"
@@ -26,60 +28,60 @@ export class DisciplinasComponent implements OnInit {
   //constructor
   constructor(private router: Router, private servicioDisciplinas: DisciplinasService, private formBuilder: FormBuilder) { 
     this.DisciplinasForm = this.formBuilder.group({
-      nombre:[""],
-      codigo:[""],
-      descripcion:[""],
+      filtro:[""]
     })
   }
   //metodos al iniciar
   ngOnInit(): void {
-    this.obtenerDisciplinas("","","");
+    this.obtenerDisciplinas("",);
   }
-  //traer la facultades paginadas con los filtros
-  private obtenerDisciplinas(nombre:string,codigo:string,codigoNumerico:string){
-    this.servicioDisciplinas.getDisciplinasPage(nombre,codigo,codigoNumerico,this.page,this.size,this.order,this.asc).subscribe(listaDisciplinas =>{
+  //traer la disciplinas paginadas con los filtros
+  private obtenerDisciplinas(filtro:string){
+    this.servicioDisciplinas.getDisciplinasPage(filtro,this.page,this.size,this.order,this.asc).subscribe(listaDisciplinas =>{
       this.disciplinas=listaDisciplinas.content;
       this.primera=listaDisciplinas.first;
       this.ultima=listaDisciplinas.last;
       this.totalPages=listaDisciplinas.totalPages;
     })
   }
-  //ir a registrar facultad
+  //ir a registrar disciplinas
   onNuevoDisciplinaClick(){
     this.router.navigate(['disciplina-nuevo'])
   }
-  //alerta eliminar facultad
-  eliminar(id: number){
-    alert("Eliminando a "+id)
-  }
-  //traer facultades con filtro
+  //traer disciplinas con filtro
   onFiltrar(){
-    const nombre=this.DisciplinasForm.controls["nombre"].value
-    const codigo=this.DisciplinasForm.controls["codigo"].value
-    const codigoNumerico=this.DisciplinasForm.controls["descripcion"].value
-    this.obtenerDisciplinas(nombre,codigo,codigoNumerico)
+    const filtro = this.DisciplinasForm.controls["filtro"].value
+    this.obtenerDisciplinas(filtro)
   }
   //limpiar filtro
   onLimpiarFiltro() {
-    this.DisciplinasForm.controls["nombre"].setValue('')
-    this.DisciplinasForm.controls["codigo"].setValue('')
-    this.DisciplinasForm.controls["descripcion"].setValue('')
+    this.DisciplinasForm.controls["filtro"].setValue('')
     this.onFiltrar()
   }
   //volver al menu principal
   onVolver(){
     this.router.navigate(['home'])
   }
-  //ir a modificar facultad
+  //ir a modificar disciplina
   onModificar(disciplina:Disciplina){
     this.router.navigate(['disciplina-actualizar',disciplina])
   }
-  //borrar facultad
+  //aviso si se acepta se borrar la disciplina, en caso contrario se cancela
   onBorrar(disciplina:Disciplina){
-    this.servicioDisciplinas.eliminarDisciplinas(disciplina).subscribe(disciplina =>{console.log(disciplina);})
-    this.onFiltrar();
+    Swal.fire({
+      title: 'Borrar',
+      text: "Desea eliminar disciplina " +disciplina.nombre+"?!",
+      icon: 'warning',
+      showCancelButton: true,
+      confirmButtonText: 'Si!'
+    }as any).then((result)=>{
+      if(result.isConfirmed){
+        this.servicioDisciplinas.eliminarDisciplinas(disciplina).subscribe(disciplina=>{console.log(disciplina);})
+        this.onFiltrar();
+      }
+    })
   }
-  //ir a consultar facultad
+  //ir a consultar disciplina
   onConsultar(disciplina:Disciplina){
     this.router.navigate(['disciplina-consultar',disciplina])
   }

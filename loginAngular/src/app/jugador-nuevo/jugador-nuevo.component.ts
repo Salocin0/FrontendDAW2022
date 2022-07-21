@@ -6,8 +6,6 @@ import { FormBuilder, Validators } from '@angular/forms';
 import Swal from 'sweetalert2';
 import { JugadorService } from '../servicios/jugador.service';
 import { FacultadesService } from '../servicios/facultades.service';
-import { Facultad } from '../dominio/facultad';
-
 @Component({
   selector: 'app-jugador-nuevo',
   templateUrl: './jugador-nuevo.component.html',
@@ -15,16 +13,18 @@ import { Facultad } from '../dominio/facultad';
 })
 
 export class JugadorNuevoComponent implements OnInit {
-  
+  //atributos
   jugadorNuevo:any
-  
   facultadSel = {id:0,nombre:"",codigo:"",codigoNumerico:""}
   disciplinaSel = {id:0,nombre:"",codigo:"",descripcion:""}
-
   nacionalidades: any
   disciplinas: any[]=[]
   facultades: any[]=[]
-  
+  enviado = false
+  opcionSeleccionado: any;
+  verSelecciondis: any;
+  verSeleccionfac: any;
+  verSeleccionnac: any;
   registroForm = this.builder.group({
     Nombre:["", [Validators.required, Validators.minLength(2)]],
     Apellido:["", [Validators.required, Validators.minLength(2)]],
@@ -37,16 +37,10 @@ export class JugadorNuevoComponent implements OnInit {
     Facultad: ["", ], 
     Disciplina: ["", ] 
   })
-
-  enviado = false
-  opcionSeleccionado: any;
-  verSelecciondis: any;
-  verSeleccionfac: any;
-  verSeleccionnac: any;
-
+  //constructor
   constructor(private builder: FormBuilder, private router:Router, private servicioNacionalidades:NacionalidadesService, private servicioDisciplinas:DisciplinasService,  private servicioJugador: JugadorService, private servicioFacultades: FacultadesService) {
   }
-
+  //cargar combos
   ngOnInit(): void {
     // cargar nacionalidades
     this.servicioNacionalidades.getNacionalidades().subscribe((rta) => {this.nacionalidades = rta});
@@ -55,7 +49,7 @@ export class JugadorNuevoComponent implements OnInit {
     //cargar facultades
     this.servicioFacultades.getFacultades().subscribe((rta) => {this.facultades=rta});
   }
-
+  //guardar la facultad seleccionada en variable
   onclickFacultad(){
     this.verSeleccionfac = this.registroForm.controls["Facultad"].value;
     for(let i = 0 ; i < this.facultades.length ; i++){
@@ -67,7 +61,7 @@ export class JugadorNuevoComponent implements OnInit {
       }
     }
   }
-
+  //guardar la disciplina seleccionada en variable
   onclickDisciplina(){
     this.verSelecciondis = this.registroForm.controls["Disciplina"].value;
     for(let i = 0 ; i < this.disciplinas.length ; i++){
@@ -79,14 +73,14 @@ export class JugadorNuevoComponent implements OnInit {
       }
     }
   }
-  
+  //guardar la nacionalidad seleccionada en variable
   onclickNacionalidad(){
     this.verSeleccionnac = this.registroForm.controls["Nacionalidad"].value
   }
-
+  //guardar jugador
   onSubmit() {
     this.enviado = true
-    
+    //comprobar validaciones en los campos
     if(this.registroForm.controls['Nombre'].errors) return
     if(this.registroForm.controls['Apellido'].errors) return
     if(this.registroForm.controls['Email'].errors) return
@@ -97,8 +91,7 @@ export class JugadorNuevoComponent implements OnInit {
     if(this.registroForm.controls['Facultad'].errors) return
     if(this.registroForm.controls['Disciplina'].errors) return
     if(this.registroForm.controls['Nacionalidad'].errors) return
-    
-
+    //crear jugador con los datos cargados
     const jugador = {
       nombre: this.registroForm.controls["Nombre"].value,
       apellido: this.registroForm.controls["Apellido"].value,
@@ -111,18 +104,19 @@ export class JugadorNuevoComponent implements OnInit {
       facultad: this.facultadSel,
       disciplina: this.disciplinaSel
     }
+    //guardar jugador
     this.jugadorNuevo = jugador;
     this.servicioJugador.guardarJugador(this.jugadorNuevo).subscribe()
     console.log(this.jugadorNuevo);
-
+    //aviso registro
     Swal.fire({
       title: 'Jugador registrado'
     })
+    //volver
     this.onVolver()
   }
-
+  //volver a menu principal
   onVolver(){
     this.router.navigate(['home'])
   }
-
 }                

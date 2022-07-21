@@ -3,7 +3,6 @@ import { FormBuilder, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import Swal from 'sweetalert2';
 import { DisciplinasService } from '../servicios/disciplinas.service';
-
 @Component({
   selector: 'app-disciplina-nuevo',
   templateUrl: './disciplina-nuevo.component.html',
@@ -25,33 +24,32 @@ export class DisciplinaNuevoComponent implements OnInit {
     Codigo:["", [Validators.required, Validators.minLength(3)]],
     Descripcion:["", [Validators.required,Validators.minLength(1)]],
   })  
-
+  //registrar nueva disciplina
   onSubmit() {
-    //actualizar variable
     this.enviado = true
     //comprobar validaciones
     if(this.registroForm.controls['Nombre'].errors) return
     if(this.registroForm.controls['Codigo'].errors) return
     if(this.registroForm.controls['Descripcion'].errors) return
-    //crear objeto facultad
+    //crear objeto disciplina
     const disciplina = {
       nombre: this.registroForm.controls["Nombre"].value,
       codigo: this.registroForm.controls["Codigo"].value,
       descripcion : this.registroForm.controls["Descripcion"].value,
     }
-    //guardar facultad
+    //guardar disciplina
     this.disciplinaNueva=disciplina
     this.serviciodisciplinas.guardarDisciplinas(this.disciplinaNueva).subscribe()
     console.log(this.disciplinaNueva);
-    //aviso facultad
+    //aviso registro
     Swal.fire({
       title: 'Disciplina registrada'
     })
+    //volver
     this.onVolver()
   }
   //volver a menu principal
   onVolver(){
     this.router.navigate(['home'])
   }
-
 }

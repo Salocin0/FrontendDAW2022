@@ -1,8 +1,7 @@
 import { Disciplina } from "./disciplina"
 import { Facultad } from "./facultad"
-import { Nacionalidad } from "./nacionalidad"
-
 export class Jugador {
+    //atributos
     id: number
     nombre: string
     apellido: string
@@ -16,7 +15,7 @@ export class Jugador {
     telefono:string
     legajo:string
     email:string
-
+    //constructor
     constructor(nombre: string,apellido: string,dni: number, facultad: Facultad, nacionalidad:String, disciplina:Disciplina, fecha:Date,id:number, apellidoNombre:string, fechaFormat:string, telefono:string, legajo:string, email:string){
         this.id=id
         this.nombre = nombre

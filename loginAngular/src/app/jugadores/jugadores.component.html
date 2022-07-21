@@ -1,8 +1,10 @@
 <form [formGroup]="filtrarJugadoresForm" (ngSubmit)="onFiltrar()">
     <div class="mx-auto" style="width: 90%;">
+        <!--titulo-->
         <h1>Jugadores</h1>
         <h3>Filtros</h3>
             <div class="row">
+                <!--combo disciplina-->
                 <div class="form-group col mb-3">
                     <label class="form-label" for="disciplina">Disciplina</label>
                     <select id="disciplina" class="form-select" formControlName="filtroDisciplina" (click)="onFiltrar()">
@@ -12,6 +14,7 @@
                         </option>
                     </select>
                 </div>
+                <!--combo facultad-->
                 <div class="form-group col mb-3">
                     <label class="form-label" for="disciplina">Facultad</label>
                     <select id="disciplina" class="form-select" formControlName="filtroFacultad" (click)="onFiltrar()">
@@ -21,6 +24,7 @@
                         </option>
                     </select>
                 </div>
+                <!--combo nacionalidad-->
                 <div class="form-group col mb-3">
                     <label class="form-label" for="nacionalidad">Nacionalidad</label>
                     <select id="nacionalidad" class="form-select" formControlName="filtroNacionalidad" (click)="onFiltrar()">
@@ -32,15 +36,18 @@
                 </div>
             </div>
         <div class="row">
+            <!--label + text filtro-->
             <label class="form-label">Filtro</label>
             <div class="col btn-group btn-group-block mb-3">
                 <input formControlName="filtro" class="form-control" type="text" style="width : 100%" placeholder="Ingrese cadena">
             </div>
+            <!--botones filtro-->
             <div class="col-3 btn-group btn-group-block mb-3" align="right">
                 <button class="btn btn-block btn-success" (click)="onFiltrar()">Filtrar <i class="fa-solid fa-filter"></i></button>
                 <button class="btn btn-block btn-danger" (click)="onLimpiarFiltro()">Borrar <i class="fa-solid fa-trash"></i></button>
             </div> 
         </div>
+        <!--tabla jugadores-->
         <table class="table table-bordered text-center">
             <thead class="table-dark">
                 <tr class="col-md-auto">
@@ -77,11 +84,13 @@
                 </tr>
             </tbody>
         </table>
+        <!--botones pagina-->
         <div align="center">
             <button (click)="onPaginaAnterior()" class="btn btn-primary" style="margin: 10px"><i class="fa-solid fa-angle-left"></i></button>
             <label>{{this.page+1}}/{{this.totalPages}}</label><!--funcion para cambiar el numero dependiendo la paginacion -->
             <button (click)="onPaginaSiguiente()" class="btn btn-primary" style="margin: 10px"><i class="fa-solid fa-angle-right"></i></button>
         </div>
+        <!--botones nuevo + volver-->
         <div align="right">
             <button (click)="onNuevoJugadorClick()" style="margin: 10px" class="btn btn-success" ><i class="fa-solid fa-plus"></i></button>
             <button (click)="onVolver()" class="btn btn-danger">Volver <i class="fa-solid fa-arrow-right-from-bracket"></i></button>

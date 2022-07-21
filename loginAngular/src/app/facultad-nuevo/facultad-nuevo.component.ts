@@ -3,13 +3,11 @@ import { FormBuilder, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import Swal from 'sweetalert2';
 import { FacultadesService } from '../servicios/facultades.service';
-
 @Component({
   selector: 'app-facultad-nuevo',
   templateUrl: './facultad-nuevo.component.html',
   styleUrls: ['./facultad-nuevo.component.css']
 })
-
 export class FacultadNuevoComponent implements OnInit {
   //atributos
   facultadNueva:any
@@ -26,9 +24,8 @@ export class FacultadNuevoComponent implements OnInit {
     Codigo:["", [Validators.required, Validators.minLength(3)]],
     CodigoNumerico:["", [Validators.required,Validators.minLength(1)]],
   })  
-
+  //registrar nueva facultad
   onSubmit() {
-    //actualizar variable
     this.enviado = true
     //comprobar validaciones
     if(this.registroForm.controls['Nombre'].errors) return
@@ -48,11 +45,11 @@ export class FacultadNuevoComponent implements OnInit {
     Swal.fire({
       title: 'Facultad registrada'
     })
+    //volver
     this.onVolver()
   }
   //volver a menu principal
   onVolver(){
     this.router.navigate(['home'])
   }
-
 }
