@@ -1,10 +1,8 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs/internal/Observable';
-import { Disciplina } from '../dominio/disciplina';
-import { Facultad } from '../dominio/facultad';
 import { Jugador } from '../dominio/jugador';
-import { Nacionalidad } from '../dominio/nacionalidad';
+
 
 @Injectable({
   providedIn: 'root'

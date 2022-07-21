@@ -34,27 +34,27 @@
         </div>
         <div class="mb-3">
           <legend>Facultad</legend><br>
-          <select name="facultades" formControlName="Localidad" id="">
+          <select name="facultades" formControlName="Facultad" class="form-control" id=""  (change)="onclickFacultad()">
             <option value="">Seleccionar</option>
-            <option *ngFor="let n of facultades" [value]="n.codigo">
-              {{n.nombre}}
+            <option *ngFor="let facultad of facultades" [value]="facultad.codigo" >
+              {{facultad.nombre}}
             </option>
           </select>
         </div>
         <div class="mb-3">
           <legend>Disciplina</legend><br>
-          <select name="disciplinas" formControlName="Disciplina" id="">
+          <select name="disciplinas" formControlName="Disciplina" class="form-control" id="" (change)="onclickDisciplina()">
             <option value="">Seleccionar</option>
-            <option *ngFor="let n of disciplinas" [value]="n.codigo">
-              {{n.nombre}}
+            <option *ngFor="let disciplina of disciplinas" [value]="disciplina.codigo">
+              {{disciplina.nombre}}
             </option>
           </select>
         </div>
         <div class="mb-3">
           <legend>Nacionalidad</legend><br>
-          <select name="nacionalidades" formControlName="Nacionalidad" id="">
+          <select name="nacionalidades" formControlName="Nacionalidad" class="form-control" id="" (change)="onclickNacionalidad()">
             <option value="">Seleccionar</option>
-            <option *ngFor="let n of nacionalidades" [value]="n.alpha3code">
+            <option *ngFor="let n of nacionalidades" [value]="n.name">
               {{n.name}}
             </option>
           </select>

@@ -1,4 +1,3 @@
-import { NacionalidadesService } from "../servicios/nacionalidades.service"
 import { Disciplina } from "./disciplina"
 import { Facultad } from "./facultad"
 import { Nacionalidad } from "./nacionalidad"
@@ -10,7 +9,7 @@ export class Jugador {
     dni: number
     fechaNacimiento: Date
     facultad: Facultad
-    nacionalidad: Nacionalidad
+    nacionalidad: String
     disciplina: Disciplina
     apellidoNombre: string
     fechaFormat:string
@@ -18,7 +17,7 @@ export class Jugador {
     legajo:string
     email:string
 
-    constructor(nombre: string,apellido: string,dni: number, facultad: Facultad, nacionalidad:Nacionalidad, disciplina:Disciplina, fecha:Date,id:number, apellidoNombre:string, fechaFormat:string, telefono:string, legajo:string, email:string){
+    constructor(nombre: string,apellido: string,dni: number, facultad: Facultad, nacionalidad:String, disciplina:Disciplina, fecha:Date,id:number, apellidoNombre:string, fechaFormat:string, telefono:string, legajo:string, email:string){
         this.id=id
         this.nombre = nombre
         this.apellido = apellido

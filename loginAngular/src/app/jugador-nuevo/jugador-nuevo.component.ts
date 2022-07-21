@@ -6,6 +6,7 @@ import { FormBuilder, Validators } from '@angular/forms';
 import Swal from 'sweetalert2';
 import { JugadorService } from '../servicios/jugador.service';
 import { FacultadesService } from '../servicios/facultades.service';
+import { Facultad } from '../dominio/facultad';
 
 @Component({
   selector: 'app-jugador-nuevo',
@@ -16,6 +17,9 @@ import { FacultadesService } from '../servicios/facultades.service';
 export class JugadorNuevoComponent implements OnInit {
   
   jugadorNuevo:any
+  
+  facultadSel = {id:0,nombre:"",codigo:"",codigoNumerico:""}
+  disciplinaSel = {id:0,nombre:"",codigo:"",descripcion:""}
 
   nacionalidades: any
   disciplinas: any[]=[]
@@ -30,11 +34,15 @@ export class JugadorNuevoComponent implements OnInit {
     Telefono: ["", ],
     FechaDeNacimiento: ["", ], 
     Nacionalidad: ["", ],
-    Localidad: ["", ], 
+    Facultad: ["", ], 
     Disciplina: ["", ] 
   })
 
   enviado = false
+  opcionSeleccionado: any;
+  verSelecciondis: any;
+  verSeleccionfac: any;
+  verSeleccionnac: any;
 
   constructor(private builder: FormBuilder, private router:Router, private servicioNacionalidades:NacionalidadesService, private servicioDisciplinas:DisciplinasService,  private servicioJugador: JugadorService, private servicioFacultades: FacultadesService) {
   }
@@ -48,6 +56,34 @@ export class JugadorNuevoComponent implements OnInit {
     this.servicioFacultades.getFacultades().subscribe((rta) => {this.facultades=rta});
   }
 
+  onclickFacultad(){
+    this.verSeleccionfac = this.registroForm.controls["Facultad"].value;
+    for(let i = 0 ; i < this.facultades.length ; i++){
+      if(this.facultades[i].codigo==this.verSeleccionfac){
+        this.facultadSel.id=this.facultades[i].id
+        this.facultadSel.nombre=this.facultades[i].nombre
+        this.facultadSel.codigo=this.facultades[i].codigo
+        this.facultadSel.codigoNumerico=this.facultades[i].codigoNumerico
+      }
+    }
+  }
+
+  onclickDisciplina(){
+    this.verSelecciondis = this.registroForm.controls["Disciplina"].value;
+    for(let i = 0 ; i < this.disciplinas.length ; i++){
+      if(this.disciplinas[i].nombre==this.verSelecciondis){
+        this.disciplinaSel.id=this.disciplinas[i].id
+        this.disciplinaSel.nombre=this.disciplinas[i].nombre
+        this.disciplinaSel.codigo=this.disciplinas[i].codigo
+        this.disciplinaSel.descripcion=this.disciplinas[i].descripcion
+      }
+    }
+  }
+  
+  onclickNacionalidad(){
+    this.verSeleccionnac = this.registroForm.controls["Nacionalidad"].value
+  }
+
   onSubmit() {
     this.enviado = true
     
@@ -58,10 +94,11 @@ export class JugadorNuevoComponent implements OnInit {
     if(this.registroForm.controls['Telefono'].errors) return
     if(this.registroForm.controls['Legajo'].errors) return
     if(this.registroForm.controls['FechaDeNacimiento'].errors) return
-    if(this.registroForm.controls['Localidad'].errors) return
+    if(this.registroForm.controls['Facultad'].errors) return
     if(this.registroForm.controls['Disciplina'].errors) return
     if(this.registroForm.controls['Nacionalidad'].errors) return
     
+
     const jugador = {
       nombre: this.registroForm.controls["Nombre"].value,
       apellido: this.registroForm.controls["Apellido"].value,
@@ -69,13 +106,11 @@ export class JugadorNuevoComponent implements OnInit {
       telefono: this.registroForm.controls["Telefono"].value,
       email: this.registroForm.controls["Email"].value,
       legajo: this.registroForm.controls["Legajo"].value,
-      fecNacimiento: this.registroForm.controls["FechaDeNacimiento"].value,
-      //guardar objeto/id, no el nombre
-      nacionalidad: this.registroForm.controls["Nacionalidad"].value,
-      localidad: this.registroForm.controls["Localidad"].value,
-      disciplina: this.registroForm.controls["Disciplina"].value
+      fechaNacimiento: this.registroForm.controls["FechaDeNacimiento"].value,
+      nacionalidad: this.verSeleccionnac,
+      facultad: this.facultadSel,
+      disciplina: this.disciplinaSel
     }
-    
     this.jugadorNuevo = jugador;
     this.servicioJugador.guardarJugador(this.jugadorNuevo).subscribe()
     console.log(this.jugadorNuevo);
@@ -90,7 +125,4 @@ export class JugadorNuevoComponent implements OnInit {
     this.router.navigate(['home'])
   }
 
-  buscarNacionalidad(){
-  }
-  
 }                

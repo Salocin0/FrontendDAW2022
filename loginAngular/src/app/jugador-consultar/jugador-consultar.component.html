@@ -1,1 +1,69 @@
-<p>jugador-consultar works!</p>
+<form [formGroup]="consultarForm">
+    <div class="mx-auto" style="width: 50% ;">
+        <fieldset>
+            <!--titulo-->
+            <legend align="center">Jugador</legend>
+            <div>
+                <!--label + text id-->
+                <div class="mb-3">
+                    <label for="">Id</label>
+                    <input type="text" class="form-control" formControlName="Id" readonly="readonly">
+                </div>
+                <!--label + text nombre-->
+                <div class="mb-3">
+                    <label for="" >Nombre</label>
+                    <input type="text" class="form-control" formControlName="Nombre" readonly="readonly">
+                </div>
+                <!--label + text apellido-->
+                <div class="mb-3">
+                    <label for="" >Apellido</label>
+                    <input type="text" class="form-control" formControlName="Apellido" readonly="readonly">
+                </div>
+                <!--label + text legajo-->
+                <div class="mb-3">
+                    <label for="" >Legajo</label>
+                    <input type="text" class="form-control" formControlName="Legajo" readonly="readonly">
+                </div>
+                <!--label + text Email-->
+                <div class="mb-3">
+                    <label for="" >E-Mail</label>
+                    <input type="text" class="form-control" formControlName="Email" readonly="readonly">
+                </div>
+                <!--label + text DNI-->
+                <div class="mb-3">
+                    <label for="" >DNI</label>
+                    <input type="text" class="form-control" formControlName="DNI" readonly="readonly">
+                </div>
+                <!--label + text Fecha Nacimiento-->
+                <div class="mb-3">
+                    <label for="" >Fecha Nacimiento</label>
+                    <input type="text" class="form-control" formControlName="FechaNacimiento" readonly="readonly">
+                </div>
+                <!--label + text Telefono-->
+                <div class="mb-3">
+                    <label for="" >Telefono</label>
+                    <input type="text" class="form-control" formControlName="Telefono" readonly="readonly">
+                </div>
+                <!--label + text Disciplina-->
+                <div class="mb-3">
+                    <label for="" >Disciplina</label>
+                    <input type="text" class="form-control" formControlName="Disciplina" readonly="readonly">
+                </div>
+                <!--label + text Facultad-->
+                <div class="mb-3">
+                    <label for="" >Facultad</label>
+                    <input type="text" class="form-control" formControlName="Facultad" readonly="readonly">
+                </div>
+                <!--label + text Nacionalidad-->
+                <div class="mb-3">
+                    <label for="" >Nacionalidad</label>
+                    <input type="text" class="form-control" formControlName="Nacionalidad" readonly="readonly">
+                </div>
+                <!--boton-->
+                <div align="right">
+                    <button (click)="onVolver()" type="submit" class="btn btn-danger"><i class="fa-solid fa-arrow-right-from-bracket"></i> Volver</button>
+                </div>
+            </div> 
+        </fieldset>
+    </div>
+</form>

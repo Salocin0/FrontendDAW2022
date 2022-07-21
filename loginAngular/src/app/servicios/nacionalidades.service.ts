@@ -6,9 +6,10 @@ import { Injectable } from '@angular/core';
 })
 export class NacionalidadesService {
 
-  constructor(private http:HttpClient) { }
+  constructor(private httpClient:HttpClient) { }
 
   getNacionalidades(){
-    return this.http.get('https://restcountries.com/v2/lang/es');
+    return this.httpClient.get('https://restcountries.com/v2/lang/es');
   }
+
 }

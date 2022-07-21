@@ -1,14 +1,11 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { FormBuilder, FormGroup } from '@angular/forms';
 import { Jugador } from '../dominio/jugador';
 import { DisciplinasService } from '../servicios/disciplinas.service';
 import { FacultadesService } from '../servicios/facultades.service';
 import { JugadorService } from '../servicios/jugador.service';
 import { NacionalidadesService } from '../servicios/nacionalidades.service';
-import { Disciplina } from '../dominio/disciplina';
-import { Facultad } from '../dominio/facultad';
-import { Nacionalidad } from '../dominio/nacionalidad';
 
 @Component({
   selector: 'app-jugadores',
