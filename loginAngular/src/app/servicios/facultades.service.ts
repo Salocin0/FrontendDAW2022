@@ -23,8 +23,8 @@ export class FacultadesService {
     return this.httpClient.put<Facultad>(`${this.URLBase}`,facultad)
   }
   //eliminar facultad
-  eliminarFacultad(facultad:Facultad): Observable<Facultad>{
-    return this.httpClient.delete<Facultad>(`${this.URLBase}`+"/"+facultad.id)
+  eliminarFacultad(facultad:Facultad): Observable<Facultad>{ 
+      return this.httpClient.delete<Facultad>(`${this.URLBase}`+"/"+facultad.id)
   }
   //tomar facultad por id
   getFacultad(id:number): Observable<Facultad>{

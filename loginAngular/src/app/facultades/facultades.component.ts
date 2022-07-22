@@ -74,10 +74,16 @@ export class FacultadesComponent implements OnInit {
       icon: 'warning',
       showCancelButton: true,
       confirmButtonText: 'Si!'
-    }as any).then((result)=>{
-      if(result.isConfirmed){
-        this.servicioFacultades.eliminarFacultad(facultad).subscribe(facultad =>{console.log(facultad);})
-        this.onFiltrar();
+    }as any).then((result)=>{if(result.isConfirmed){
+      this.servicioFacultades.eliminarFacultad(facultad).subscribe(
+        facultad =>{console.log(facultad)}, 
+        ((error: any) =>Swal.fire({
+          title: 'Error',
+          text: "No se puede eliminar " +facultad.nombre,
+          icon: 'warning',
+          confirmButtonText: 'Aceptar'
+        })))
+        this.onFiltrar()
       }
     })
   }

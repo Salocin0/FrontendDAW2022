@@ -76,8 +76,15 @@ export class DisciplinasComponent implements OnInit {
       confirmButtonText: 'Si!'
     }as any).then((result)=>{
       if(result.isConfirmed){
-        this.servicioDisciplinas.eliminarDisciplinas(disciplina).subscribe(disciplina=>{console.log(disciplina);})
-        this.onFiltrar();
+        this.servicioDisciplinas.eliminarDisciplinas(disciplina).subscribe(
+          disciplina=>{console.log(disciplina)},
+          ((error: any) =>Swal.fire({
+            title: 'Error',
+            text: "No se puede eliminar " +disciplina.nombre,
+            icon: 'warning',
+            confirmButtonText: 'Aceptar'
+          })))
+        this.onFiltrar()
       }
     })
   }

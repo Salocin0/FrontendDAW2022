@@ -7,7 +7,7 @@
                 <!--combo disciplina-->
                 <div class="form-group col mb-3">
                     <label class="form-label" for="disciplina">Disciplina</label>
-                    <select id="disciplina" class="form-select" formControlName="filtroDisciplina" (click)="onFiltrar()">
+                    <select id="disciplina" class="form-select" formControlName="filtroDisciplina" (change)="onFiltrar()">
                     <option value="">Seleccionar</option>
                         <option *ngFor="let n of disciplinas" [value]="n.nombre">
                             {{n.nombre}}
@@ -17,7 +17,7 @@
                 <!--combo facultad-->
                 <div class="form-group col mb-3">
                     <label class="form-label" for="disciplina">Facultad</label>
-                    <select id="disciplina" class="form-select" formControlName="filtroFacultad" (click)="onFiltrar()">
+                    <select id="disciplina" class="form-select" formControlName="filtroFacultad" (change)="onFiltrar()">
                     <option value="">Seleccionar</option>
                         <option *ngFor="let n of facultades" [value]="n.nombre" >                                
                             {{n.nombre}}
@@ -27,9 +27,9 @@
                 <!--combo nacionalidad-->
                 <div class="form-group col mb-3">
                     <label class="form-label" for="nacionalidad">Nacionalidad</label>
-                    <select id="nacionalidad" class="form-select" formControlName="filtroNacionalidad" (click)="onFiltrar()">
+                    <select id="nacionalidad" class="form-select" formControlName="filtroNacionalidad" (change)="onFiltrar()">
                     <option value="">Seleccionar</option>
-                        <option *ngFor="let n of nacionalidades" [value]="n.nombre">
+                        <option *ngFor="let n of nacionalidades" [value]="n.name">
                             {{n.name}}
                         </option>
                     </select>

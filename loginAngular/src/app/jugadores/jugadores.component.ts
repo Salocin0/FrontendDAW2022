@@ -66,17 +66,11 @@ export class JugadoresComponent implements OnInit {
     //guarda el valor de input
     const filtro=this.filtrarJugadoresForm.controls["filtro"].value
     //guarda filtro disciplina si esta seleccionado
-    if(this.filtrarJugadoresForm.controls["filtroDisciplina"].value!="Seleccionar"){
-      this.filtroDisciplina=this.filtrarJugadoresForm.controls["filtroDisciplina"].value
-    }
+    this.filtroDisciplina=this.filtrarJugadoresForm.controls["filtroDisciplina"].value
     //guarda filtro facultad si esta seleccionado
-    if(this.filtrarJugadoresForm.controls["filtroFacultad"].value.value!="Seleccionar"){
-      this.filtroFacultad=this.filtrarJugadoresForm.controls["filtroFacultad"].value
-    }
+    this.filtroFacultad=this.filtrarJugadoresForm.controls["filtroFacultad"].value
     //guarda filtro nacionalidad si esta seleccionado
-    if(this.filtrarJugadoresForm.controls["filtroNacionalidad"].value!="Seleccionar"){
-      this.filtroNacionalidad=this.filtrarJugadoresForm.controls["filtroNacionalidad"].value
-    }
+    this.filtroNacionalidad=this.filtrarJugadoresForm.controls["filtroNacionalidad"].value
     //obtiene los jugadores con los filtros
     this.obtenerJugadores(filtro,this.filtroDisciplina,this.filtroFacultad,this.filtroNacionalidad)
   }

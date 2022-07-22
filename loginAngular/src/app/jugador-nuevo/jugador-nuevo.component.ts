@@ -65,7 +65,7 @@ export class JugadorNuevoComponent implements OnInit {
   onclickDisciplina(){
     this.verSelecciondis = this.registroForm.controls["Disciplina"].value;
     for(let i = 0 ; i < this.disciplinas.length ; i++){
-      if(this.disciplinas[i].nombre==this.verSelecciondis){
+      if(this.disciplinas[i].codigo==this.verSelecciondis){
         this.disciplinaSel.id=this.disciplinas[i].id
         this.disciplinaSel.nombre=this.disciplinas[i].nombre
         this.disciplinaSel.codigo=this.disciplinas[i].codigo
