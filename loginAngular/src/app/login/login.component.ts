@@ -11,8 +11,8 @@ export class LoginComponent implements OnInit {
   //atributos
   loginForm = this.builder.group(
     {
-    usuario: ['',[Validators.required], Validators.minLength(4)],
-    password:['',[Validators.required]]
+    usuario: ['',[Validators.required, Validators.minLength(4)]],
+    password:['',[Validators.required, Validators.minLength(4)]]
     }
   )
   //constructor
@@ -22,14 +22,14 @@ export class LoginComponent implements OnInit {
   }
   //comprueba el usuario y la contraseña para ingresar
   onSubmit(){
-    if (!this.loginForm.get("usuario")?.errors && !this.loginForm.get("password")?.errors){
+    if(this.loginForm.controls['usuario'].errors || this.loginForm.controls['password'].errors){
+      Swal.fire({
+        title: 'Error en usuario o contraseña'
+      })
+    }else{
       this.router.navigate(['home'])
       Swal.fire({
         title: 'Bienvenido al sistema'
-      })
-    }else{
-      Swal.fire({
-        title: 'Error en usuario o contraseña'
       })
     }
   }

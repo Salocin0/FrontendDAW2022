@@ -75,8 +75,10 @@ export class JugadorActualizarComponent implements OnInit {
   onclickDisciplina(){
     this.verSelecciondis = this.actualizarForm.controls["Disciplina"].value;
     for(let i = 0 ; i < this.disciplinas.length ; i++){
-      if(this.disciplinas[i].nombre==this.verSelecciondis){
+      if(this.disciplinas[i].codigo==this.verSelecciondis){
+        console.log(this.disciplinas[i].id)
         this.disciplinaSel.id=this.disciplinas[i].id
+        console.log(this.disciplinaSel.id)
         this.disciplinaSel.nombre=this.disciplinas[i].nombre
         this.disciplinaSel.codigo=this.disciplinas[i].codigo
         this.disciplinaSel.descripcion=this.disciplinas[i].descripcion

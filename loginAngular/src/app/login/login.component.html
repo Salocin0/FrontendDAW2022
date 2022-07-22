@@ -13,12 +13,12 @@
                 <!--label + imput usuario-->
                 <div class="form-group mb-3">
                     <i class="fa-solid fa-user"></i> <label for="Usuario">Usuario</label>
-                    <input type="text" formControlName="usuario" class="form-control" [ngClass]="{'is-invalid':loginForm.controls['usuario'].touched && loginForm.controls['usuario'].errors!['required']}"/>
+                    <input type="text" formControlName="usuario" class="form-control" [ngClass]="{'is-invalid':loginForm.controls['usuario'].touched && loginForm.controls['usuario'].errors}"/>
                 </div>
                 <!--label + imput contraseña-->
                 <div class="form-group mb-3">
                     <i class="fa-solid fa-key"></i> <label>Contraseña</label>
-                    <input type="password" formControlName="password" class="form-control" [ngClass]="{'is-invalid':loginForm.controls['password'].touched && loginForm.controls['password'].errors!['required']}"/>
+                    <input type="password" formControlName="password" class="form-control" [ngClass]="{'is-invalid':loginForm.controls['password'].touched && loginForm.controls['password'].errors}"/>
                 </div>
                 <!--boton ingresar-->
                 <div class="form-group mb-3">
